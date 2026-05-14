@@ -1,12 +1,17 @@
 const cursordot = document.querySelector('.cursor-dot');
-const sparklytrail = document.querySelector('.sparkly-trail');
 document.addEventListener('mousemove', function(event){
-    console.log(event);
+    
     cursordot.style.left = event.pageX + 'px';
     cursordot.style.top = event.pageY + 'px';
+
+    const trail = document.createElement("div");
+    trail.className = "sparkly-trail";
+    trail.style.left = event.clientX + "px";
+    trail.style.top = event.clientY + "px";
+
+    document.body.appendChild(trail);
+    setTimeout(function() {
+    trail.remove();
+  }, 100);
 });
-document.addEventListener('mousemove', function(event){
-    console.log(event);
-    sparklytrail.style.left = event.pageX + 'px';
-    sparklytrail.style.top = event.pageY + 'px';
-});
+
