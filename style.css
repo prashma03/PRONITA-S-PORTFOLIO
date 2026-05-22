@@ -60,3 +60,11 @@ h1 {
     position:absolute;
 
 }
+body.dark-mode {
+  background-color: #120817;
+  color: white;
+}
+body {
+    background-color: white;
+    color:#120817;
+}
