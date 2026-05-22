@@ -41,4 +41,22 @@ h1 {
 }
 .toggle {
     border-radius: 30%;
+    position: relative;
+    width:60px;
+    border-color: gray;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+.toggle-knob {
+    display:block;
+    background-color: black;
+    border-radius: 50%;
+    width: 10px;
+    height:10px;
+    top:0cm;
+    left:0cm;
+    position:absolute;
+
 }
