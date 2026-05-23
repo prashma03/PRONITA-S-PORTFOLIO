@@ -17,6 +17,7 @@ document.addEventListener('mousemove', function(event){
 const toggleButton = document.querySelector('.toggle');
 toggleButton.addEventListener('click', function() {
   console.log('Toggle button clicked');
+  document.body.classList.toggle('dark-mode');
 });
 
 
