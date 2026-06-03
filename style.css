@@ -41,14 +41,15 @@ h1 {
 }
 .toggle {
     border-radius: 30%;
-    position: relative;
+    position: fixed;
     width:60px;
     border-color: gray;
     display:flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 8px;
-    height:40px
+    height:40px;
+    z-index: 10;
 }
 .toggle-knob {
     display:block;
@@ -74,4 +75,113 @@ body.dark-mode .toggle-knob {
 }
 button {
     border-radius: 30%;
+}
+.intro-page {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#main-title {
+    position: relative;
+    z-index: 4;
+    cursor: none;
+    display: flex;
+    gap: 25px;
+}
+
+
+#main-title:hover {
+    transform: scale(1.05);
+    text-shadow: 0px 0px 25px #ffd4dd;
+}
+
+.curtain {
+    
+    position: fixed;
+    top: 0;
+    width: 50%;
+    height: 100vh;
+    background: linear-gradient(135deg, #f8a5b8, #f2728e);
+    z-index: 2;
+    transition: transform 1.5s ease-in-out;
+}
+
+
+.curtain-left {
+    left: 0;
+}
+
+.curtain-right {
+    right: 0;
+}
+.title-left,
+.title-right {
+    display: inline-block;
+    transition: transform 1.5s ease-in-out, opacity 1s ease;
+}
+
+body.open-curtain .title-left {
+    transform: translateX(-120vw);
+    opacity: 0;
+}
+
+body.open-curtain .title-right {
+    transform: translateX(120vw);
+    opacity: 0;
+}
+
+body.open-curtain .curtain-left {
+    transform: translateX(-100%);
+}
+
+body.open-curtain .curtain-right {
+    transform: translateX(100%);
+}
+
+.polaroid-page {
+    min-height: 100vh;
+    padding: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    background-color: #fff7fa;
+}
+
+.polaroid {
+    width: 260px;
+    background-color: white;
+    padding: 18px 18px 40px;
+    box-shadow: 0px 10px 25px rgba(242, 114, 142, 0.3);
+    transform: rotate(-4deg);
+    text-align: center;
+}
+
+.photo-placeholder {
+    height: 280px;
+    background-color: #ffd4dd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f2728e;
+}
+
+.intro-text {
+    max-width: 450px;
+    color: #120817;
+}
+
+.intro-text h2 {
+    font-family: "Edu NSW ACT Cursive", cursive;
+    color: #f2728e;
+    font-size: 3em;
+}
+.polaroid-img {
+    width: 50px;
+    height:50px;
+
 }
