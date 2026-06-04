@@ -24,10 +24,4 @@ const mainTitle = document.querySelector('#main-title');
 
 mainTitle.addEventListener('click', function() {
   document.body.classList.add('open-curtain');
-
-  setTimeout(function() {
-    document.querySelector('#polaroid-page').scrollIntoView({
-      behavior: 'smooth'
-    });
-  }, 900);
 });

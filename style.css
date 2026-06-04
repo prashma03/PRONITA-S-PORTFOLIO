@@ -6,7 +6,7 @@ h1 {
     color:#f2728e ;
     text-align: center;
     font-size: 7em;
-    margin-top: 200px;
+    margin-top: 0px;
 }
 
 .cursor-dot {
@@ -83,6 +83,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 3;
 }
 
 #main-title {
@@ -101,7 +102,7 @@ button {
 
 .curtain {
     
-    position: fixed;
+    position: absolute;
     top: 0;
     width: 50%;
     height: 100vh;
@@ -144,12 +145,18 @@ body.open-curtain .curtain-right {
 
 .polaroid-page {
     min-height: 100vh;
+    width: 100%;
     padding: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 80px;
     background-color: #fff7fa;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
 .polaroid {
@@ -181,7 +188,7 @@ body.open-curtain .curtain-right {
     font-size: 3em;
 }
 .polaroid-img {
-    width: 50px;
-    height:50px;
+    width: 250px;
+    height:250px;
 
 }
