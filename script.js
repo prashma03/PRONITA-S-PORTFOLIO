@@ -21,10 +21,14 @@ toggleButton.addEventListener('click', function() {
 });
 
 const mainTitle = document.querySelector('#main-title');
+const openBookButton = document.querySelector('.open-book-button');
 
-mainTitle.addEventListener('click', function() {
+function openCurtain() {
   document.body.classList.add('open-curtain');
-});
+}
+
+mainTitle.addEventListener('click', openCurtain);
+openBookButton.addEventListener('click', openCurtain);
 
 let paperHasPulled = false;
 
@@ -40,3 +44,23 @@ window.addEventListener('wheel', function(event) {
     });
   }
 }, { passive: false });
+
+const menuButtons = document.querySelectorAll('.menu-boxes button');
+
+menuButtons.forEach(function(button) {
+  button.addEventListener('click', function() {
+    const sectionId = button.dataset.section;
+    const section = document.querySelector('#' + sectionId);
+    const allSections = document.querySelectorAll('.scrapbook-section');
+
+    allSections.forEach(function(scrapbookSection) {
+      scrapbookSection.classList.remove('active-section');
+    });
+
+    section.classList.add('active-section');
+
+    section.scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
