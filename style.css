@@ -75,6 +75,8 @@ body {
     margin: 0;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    --star-x: 0px;
+    --star-y: 0px;
 }
 body.dark-mode .toggle-knob {
     left:42px;
@@ -186,7 +188,11 @@ body.paper-pulled .intro-page {
         radial-gradient(circle at 60% 45%, rgba(242, 114, 142, 0.2), transparent 35%),
         linear-gradient(135deg, #100b1f, #171229);
     background-size: 150px 150px, 230px 230px, 100% 100%, 100% 100%;
-    background-position: 20px 35px, 90px 110px, center, center;
+    background-position:
+        calc(20px + var(--star-x)) calc(35px + var(--star-y)),
+        calc(90px - var(--star-x)) calc(110px - var(--star-y)),
+        center,
+        center;
     z-index: 2;
     transition: transform 1.5s ease-in-out;
 }
@@ -261,7 +267,11 @@ body.open-curtain .curtain-right {
         radial-gradient(circle, #ffffff 0 1.5px, transparent 2.5px),
         radial-gradient(circle, #fff7c8 0 1px, transparent 2px);
     background-size: 180px 180px, 130px 130px, 220px 220px, 95px 95px;
-    background-position: 20px 35px, 70px 95px, 120px 20px, 35px 145px;
+    background-position:
+        calc(20px + var(--star-x)) calc(35px + var(--star-y)),
+        calc(70px - var(--star-x)) calc(95px - var(--star-y)),
+        calc(120px + var(--star-y)) calc(20px - var(--star-x)),
+        calc(35px - var(--star-y)) calc(145px + var(--star-x));
     animation: stars-twinkle 3s ease-in-out infinite alternate;
 }
 
@@ -430,7 +440,11 @@ body.dark-mode .intro-text {
         radial-gradient(circle, rgba(255, 247, 200, 0.7) 0 1px, transparent 2px),
         #100b1f;
     background-size: 100% 100%, 100% 100%, 150px 150px, 230px 230px;
-    background-position: center, center, 20px 35px, 90px 110px;
+    background-position:
+        center,
+        center,
+        calc(20px + var(--star-x)) calc(35px + var(--star-y)),
+        calc(90px - var(--star-x)) calc(110px - var(--star-y));
     padding: 90px 80px;
     text-align: center;
     transform: translateY(65vh) scale(0.96);
@@ -494,7 +508,11 @@ body.paper-pulled .scrapbook-menu {
         radial-gradient(circle, rgba(255, 247, 200, 0.7) 0 1px, transparent 2px),
         #100b1f;
     background-size: 100% 100%, 100% 100%, 150px 150px, 230px 230px;
-    background-position: center, center, 20px 35px, 90px 110px;
+    background-position:
+        center,
+        center,
+        calc(20px + var(--star-x)) calc(35px + var(--star-y)),
+        calc(90px - var(--star-x)) calc(110px - var(--star-y));
     display: none;
 }
 
@@ -575,7 +593,11 @@ body.dark-mode .scrapbook-menu {
         radial-gradient(circle, rgba(255, 247, 200, 0.7) 0 1px, transparent 2px),
         #100b1f;
     background-size: 100% 100%, 100% 100%, 150px 150px, 230px 230px;
-    background-position: center, center, 20px 35px, 90px 110px;
+    background-position:
+        center,
+        center,
+        calc(20px + var(--star-x)) calc(35px + var(--star-y)),
+        calc(90px - var(--star-x)) calc(110px - var(--star-y));
 }
 
 body.dark-mode .menu-boxes button {
@@ -596,7 +618,11 @@ body.dark-mode .scrapbook-section {
         radial-gradient(circle, rgba(255, 247, 200, 0.7) 0 1px, transparent 2px),
         #100b1f;
     background-size: 100% 100%, 100% 100%, 150px 150px, 230px 230px;
-    background-position: center, center, 20px 35px, 90px 110px;
+    background-position:
+        center,
+        center,
+        calc(20px + var(--star-x)) calc(35px + var(--star-y)),
+        calc(90px - var(--star-x)) calc(110px - var(--star-y));
 }
 
 body.dark-mode .scrapbook-card {

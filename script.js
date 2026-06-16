@@ -4,6 +4,12 @@ document.addEventListener('mousemove', function(event){
     cursordot.style.left = event.pageX + 'px';
     cursordot.style.top = event.pageY + 'px';
 
+    const moveX = (event.clientX / window.innerWidth - 0.5) * 18;
+    const moveY = (event.clientY / window.innerHeight - 0.5) * 18;
+
+    document.body.style.setProperty('--star-x', moveX + 'px');
+    document.body.style.setProperty('--star-y', moveY + 'px');
+
     const trail = document.createElement("div");
     trail.className = "sparkly-trail";
     trail.style.left = event.clientX + "px";
