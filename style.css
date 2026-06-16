@@ -42,8 +42,11 @@ h1 {
 .toggle {
     border-radius: 30%;
     position: fixed;
+    top: 25px;
+    right: 25px;
     width:60px;
     border-color: gray;
+    background-color: #fffdf8;
     display:flex;
     align-items: center;
     justify-content: space-between;
@@ -69,6 +72,8 @@ body.dark-mode {
 body {
     background-color: white;
     color:#120817;
+    margin: 0;
+    overflow-x: hidden;
 }
 body.dark-mode .toggle-knob {
     left:42px;
@@ -84,6 +89,13 @@ button {
     align-items: center;
     justify-content: center;
     z-index: 3;
+    transition: transform 1.1s cubic-bezier(0.77, 0, 0.18, 1), box-shadow 1s ease-in-out;
+    transform-origin: top center;
+}
+
+body.paper-pulled .intro-page {
+    transform: translateY(-115vh) rotate(-2deg);
+    box-shadow: 0px 20px 40px rgba(242, 114, 142, 0.25);
 }
 
 #main-title {
@@ -153,10 +165,37 @@ body.open-curtain .curtain-right {
     gap: 80px;
     background-color: #fff7fa;
 
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     z-index: 1;
+    overflow: hidden;
+    transition: background-color 0.4s ease;
+}
+
+.polaroid-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 0;
+    background-image:
+        radial-gradient(circle, #fff7c8 0 2px, transparent 3px),
+        radial-gradient(circle, #ffd4dd 0 1px, transparent 2px),
+        radial-gradient(circle, #ffffff 0 1.5px, transparent 2.5px),
+        radial-gradient(circle, #fff7c8 0 1px, transparent 2px);
+    background-size: 180px 180px, 130px 130px, 220px 220px, 95px 95px;
+    background-position: 20px 35px, 70px 95px, 120px 20px, 35px 145px;
+    animation: stars-twinkle 3s ease-in-out infinite alternate;
+}
+
+body.dark-mode .polaroid-page {
+    background-color: #120817;
+}
+
+body.dark-mode .polaroid-page::before {
+    opacity: 1;
 }
 
 .polaroid {
@@ -172,6 +211,7 @@ body.open-curtain .curtain-right {
     position: relative;
     overflow: visible;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 2;
 }
 
 .polaroid:hover {
@@ -287,6 +327,13 @@ body.open-curtain .curtain-right {
 .intro-text {
     max-width: 450px;
     color: #120817;
+    position: relative;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .intro-text {
+    color: #fff7fa;
 }
 
 .intro-text h2 {
@@ -300,4 +347,82 @@ body.open-curtain .curtain-right {
     object-fit: cover;
     display: block;
     border: 1px solid #ffe3ea;
+}
+
+.scrapbook-menu {
+    min-height: 100vh;
+    background-color: #fff0f6;
+    padding: 90px 80px;
+    text-align: center;
+    transform: translateY(65vh) scale(0.96);
+    opacity: 0.2;
+    transition: transform 1.1s cubic-bezier(0.77, 0, 0.18, 1), opacity 0.8s ease;
+    position: relative;
+    z-index: 2;
+}
+
+body.paper-pulled .scrapbook-menu {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.scrapbook-menu h2 {
+    font-family: "Edu NSW ACT Cursive", cursive;
+    color: #f2728e;
+    font-size: 3.5em;
+    margin: 0 0 50px;
+}
+
+.menu-boxes {
+    display: grid;
+    grid-template-columns: repeat(3, 220px);
+    gap: 30px;
+    justify-content: center;
+}
+
+.menu-boxes button {
+    height: 110px;
+    background-color: #fffdf8;
+    border: 2px solid #ffc5d2;
+    border-radius: 8px;
+    color: #f2728e;
+    font-family: "Edu NSW ACT Cursive", cursive;
+    font-size: 1.4rem;
+    box-shadow: 0px 10px 22px rgba(242, 114, 142, 0.22);
+    cursor: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menu-boxes button:hover {
+    transform: translateY(-8px) rotate(-1deg);
+    box-shadow: 0px 16px 30px rgba(242, 114, 142, 0.35);
+}
+
+body.dark-mode .scrapbook-menu {
+    background-color: #120817;
+    background-image:
+        radial-gradient(circle, #fff7c8 0 1px, transparent 2px),
+        radial-gradient(circle, #ffd4dd 0 1px, transparent 2px),
+        radial-gradient(circle, #ffffff 0 1.5px, transparent 2.5px);
+    background-size: 180px 180px, 130px 130px, 220px 220px;
+    background-position: 20px 35px, 70px 95px, 120px 20px;
+}
+
+body.dark-mode .menu-boxes button {
+    background-color: #fff7fa;
+    box-shadow:
+        0px 10px 22px rgba(255, 212, 221, 0.18),
+        0px 0px 16px rgba(255, 247, 200, 0.25);
+}
+
+@keyframes stars-twinkle {
+    from {
+        opacity: 0.45;
+        filter: drop-shadow(0px 0px 4px #fff7c8);
+    }
+
+    to {
+        opacity: 1;
+        filter: drop-shadow(0px 0px 9px #fff7c8);
+    }
 }

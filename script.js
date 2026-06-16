@@ -25,3 +25,18 @@ const mainTitle = document.querySelector('#main-title');
 mainTitle.addEventListener('click', function() {
   document.body.classList.add('open-curtain');
 });
+
+let paperHasPulled = false;
+
+window.addEventListener('wheel', function(event) {
+  if (event.deltaY > 0 && document.body.classList.contains('open-curtain') && paperHasPulled === false) {
+    event.preventDefault();
+    paperHasPulled = true;
+    document.body.classList.add('paper-pulled');
+
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth'
+    });
+  }
+}, { passive: false });
