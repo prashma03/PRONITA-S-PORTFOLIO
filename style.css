@@ -1049,6 +1049,147 @@ body.paper-pulled .scrapbook-menu {
     text-decoration: underline;
 }
 
+.goals-planner {
+    width: min(980px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(280px, 0.95fr) minmax(300px, 1.05fr);
+    gap: 28px;
+    align-items: stretch;
+}
+
+.goals-list,
+.goal-note {
+    position: relative;
+    background:
+        linear-gradient(rgba(188, 166, 255, 0.14) 1px, transparent 1px),
+        rgba(255, 247, 250, 0.95);
+    background-size: 100% 34px;
+    border: 1px solid rgba(205, 189, 255, 0.95);
+    border-radius: 8px;
+    box-shadow:
+        0px 12px 28px rgba(0, 0, 0, 0.22),
+        0px 0px 24px rgba(188, 166, 255, 0.18);
+}
+
+.goals-list {
+    padding: 28px;
+}
+
+.goals-list::before,
+.goal-note::before {
+    content: "";
+    position: absolute;
+    top: -11px;
+    left: 28px;
+    width: 70px;
+    height: 20px;
+    background-color: rgba(255, 212, 221, 0.86);
+    transform: rotate(-3deg);
+    box-shadow: 0px 4px 10px rgba(242, 114, 142, 0.16);
+}
+
+.goal-task {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 18px;
+    padding: 14px 14px 14px 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #120817;
+    text-align: left;
+    cursor: none;
+    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.goal-task:last-child {
+    margin-bottom: 0;
+}
+
+.goal-task:hover,
+.goal-task.active-goal {
+    transform: translateX(8px);
+    background-color: rgba(255, 212, 221, 0.48);
+    border-color: rgba(242, 114, 142, 0.35);
+}
+
+.goal-check {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cdbdff;
+    border-radius: 6px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.76);
+}
+
+.goal-task.active-goal .goal-check {
+    background-color: #f2728e;
+    border-color: #f2728e;
+    box-shadow: 0px 0px 14px rgba(242, 114, 142, 0.45);
+}
+
+.goal-task.active-goal .goal-check::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 11px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(42deg);
+}
+
+.goal-task strong {
+    display: block;
+    font-family: "Edu NSW ACT Cursive", cursive;
+    color: #f2728e;
+    font-size: 1.28rem;
+    line-height: 1.15;
+}
+
+.goal-task small {
+    display: block;
+    margin-top: 5px;
+    color: #5f5570;
+    font-size: 0.9rem;
+    letter-spacing: 0;
+}
+
+.goal-note {
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 330px;
+}
+
+.goal-note-label {
+    margin: 0 0 12px;
+    color: #8f7ad2;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+}
+
+.goal-note h3 {
+    font-family: "Edu NSW ACT Cursive", cursive;
+    color: #f2728e;
+    font-size: 2.25rem;
+    margin: 0 0 18px;
+}
+
+.goal-note p:last-child {
+    margin: 0;
+    font-size: 1.04rem;
+    line-height: 1.7;
+    color: #2d2338;
+}
+
 .achievement-constellation {
     width: min(900px, 86vw);
     height: 390px;
@@ -1391,6 +1532,41 @@ body.dark-mode .scrapbook-card {
         0px 0px 16px rgba(255, 247, 200, 0.2);
 }
 
+body.dark-mode .goals-list,
+body.dark-mode .goal-note {
+    background:
+        linear-gradient(rgba(205, 189, 255, 0.12) 1px, transparent 1px),
+        radial-gradient(circle at 74% 34%, rgba(242, 114, 142, 0.2), transparent 28%),
+        radial-gradient(circle at 22% 72%, rgba(188, 166, 255, 0.18), transparent 26%),
+        rgba(16, 11, 31, 0.96);
+    background-size: 100% 34px, 100% 100%, 100% 100%, 100% 100%;
+    border-color: rgba(205, 189, 255, 0.35);
+    color: #fff7df;
+    box-shadow:
+        0px 14px 32px rgba(0, 0, 0, 0.34),
+        0px 0px 22px rgba(188, 166, 255, 0.18);
+}
+
+body.dark-mode .goal-task {
+    color: #fff7df;
+}
+
+body.dark-mode .goal-task:hover,
+body.dark-mode .goal-task.active-goal {
+    background-color: rgba(205, 189, 255, 0.12);
+    border-color: rgba(247, 215, 255, 0.35);
+}
+
+body.dark-mode .goal-check {
+    background-color: rgba(255, 247, 250, 0.08);
+    border-color: rgba(247, 215, 255, 0.58);
+}
+
+body.dark-mode .goal-task small,
+body.dark-mode .goal-note p:last-child {
+    color: rgba(255, 247, 223, 0.78);
+}
+
 @keyframes stars-twinkle {
     from {
         opacity: 0.45;
@@ -1400,5 +1576,20 @@ body.dark-mode .scrapbook-card {
     to {
         opacity: 1;
         filter: drop-shadow(0px 0px 9px #fff7c8);
+    }
+}
+
+@media (max-width: 760px) {
+    .goals-planner {
+        grid-template-columns: 1fr;
+    }
+
+    .goal-note {
+        min-height: auto;
+        padding: 30px;
+    }
+
+    .goal-note h3 {
+        font-size: 1.85rem;
     }
 }

@@ -315,3 +315,44 @@ achievementStars.forEach(function(star) {
   star.addEventListener('click', showAchievement);
   star.addEventListener('mouseenter', showAchievement);
 });
+
+const goalDetails = {
+  software: {
+    label: 'currently dreaming toward',
+    title: 'Become a Software Engineer',
+    text: 'I like mathematics, logic, and DSA, so software engineering feels like a place where my mathematical brain can solve problems and turn ideas into something real.'
+  },
+  ai: {
+    label: 'learning with intention',
+    title: 'Build with AI',
+    text: 'I see AI as a powerful innovation when it is used thoughtfully. I want to learn how to build with it in a smart, useful way that supports development instead of just following trends.'
+  },
+  fullstack: {
+    label: 'building the whole thing',
+    title: 'Grow as a Full-Stack Developer',
+    text: 'I started with an interest in front-end design, but I want deeper, more useful knowledge too. Learning full stack helps me understand the whole app, not just the part people see.'
+  },
+  travel: {
+    label: 'life outside the screen',
+    title: 'Travel The World',
+    text: 'I want to travel for joy, curiosity, and the chance to know local people and their stories. Seeing more of the world feels like another way of learning.'
+  }
+};
+
+const goalTasks = document.querySelectorAll('.goal-task');
+const goalNote = document.querySelector('.goal-note');
+
+goalTasks.forEach(function(task) {
+  task.addEventListener('click', function() {
+    const selectedGoal = goalDetails[task.dataset.goal];
+
+    goalTasks.forEach(function(otherTask) {
+      otherTask.classList.remove('active-goal');
+    });
+
+    task.classList.add('active-goal');
+    goalNote.querySelector('.goal-note-label').textContent = selectedGoal.label;
+    goalNote.querySelector('h3').textContent = selectedGoal.title;
+    goalNote.querySelector('p:last-child').textContent = selectedGoal.text;
+  });
+});
