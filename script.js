@@ -73,6 +73,7 @@ const contactWidget = document.querySelector('.contact-widget');
 const contactButton = document.querySelector('.contact-button');
 const copyEmailButton = document.querySelector('.copy-email');
 const emailText = document.querySelector('.email-text');
+const sendLetterButton = document.querySelector('.send-letter');
 
 contactButton.addEventListener('click', function() {
   contactWidget.classList.toggle('open');
@@ -91,6 +92,14 @@ copyEmailButton.addEventListener('click', function() {
   setTimeout(function() {
     copyEmailButton.textContent = 'Copy';
   }, 1200);
+});
+
+sendLetterButton.addEventListener('click', function() {
+  sendLetterButton.textContent = 'Letter Saved';
+
+  setTimeout(function() {
+    sendLetterButton.textContent = 'Send Letter';
+  }, 1400);
 });
 
 const mainTitle = document.querySelector('#main-title');
@@ -220,4 +229,89 @@ sideDots.forEach(function(dot) {
 
     setActiveDot(sectionId);
   });
+});
+
+const hobbyDetails = {
+  dance: {
+    title: 'Dancing',
+    text: 'Dance gives me a different kind of discipline and expression. It connects movement, emotion, culture, and storytelling in a way that feels very natural to me.'
+  },
+  writing: {
+    title: 'Creative Writing',
+    text: 'Writing helps me slow down and understand my thoughts better. I like turning small observations, feelings, and ideas into something with voice and shape.'
+  },
+  reading: {
+    title: 'Reading',
+    text: 'Reading keeps me curious. Whether it is research, technology, or reflective writing, I like learning how other people think and seeing the world through different perspectives.'
+  },
+  travel: {
+    title: 'Travel',
+    text: 'I want to travel for fun, but also to know local people and their stories. I think places teach you things that classrooms and screens cannot always teach.'
+  }
+};
+
+const hobbyTiles = document.querySelectorAll('.hobby-tile');
+const hobbyDetail = document.querySelector('.hobby-detail');
+
+hobbyTiles.forEach(function(tile) {
+  tile.addEventListener('click', function() {
+    const selectedHobby = hobbyDetails[tile.dataset.hobby];
+
+    hobbyTiles.forEach(function(otherTile) {
+      otherTile.classList.remove('active-hobby');
+    });
+
+    tile.classList.add('active-hobby');
+    hobbyDetail.querySelector('h3').textContent = selectedHobby.title;
+    hobbyDetail.querySelector('p:last-child').textContent = selectedHobby.text;
+  });
+});
+
+const achievementDetails = {
+  'fall-list': {
+    label: 'academic star',
+    title: "Chancellor's List",
+    text: 'Fall 2025. A reminder that consistent effort, curiosity, and discipline can become something visible.'
+  },
+  'spring-list': {
+    label: 'academic star',
+    title: "Chancellor's List",
+    text: 'Spring 2026. A second bright point in the same constellation, showing that I can keep showing up and growing.'
+  },
+  ambassador: {
+    label: 'campus star',
+    title: 'UAM Ambassador',
+    text: 'Starting Fall 2026, I will represent UAM as a student ambassador, welcoming others with the same grounded confidence I am building for myself.'
+  },
+  growth: {
+    label: 'growth star',
+    title: 'Academic Growth',
+    text: 'Each semester teaches me how to balance mathematics, computer science, projects, and research with patience and consistency.'
+  },
+  balance: {
+    label: 'creative star',
+    title: 'Creative Balance',
+    text: 'I am learning to keep both sides of myself alive: the logical side that loves DSA and the creative side that dances, writes, and builds.'
+  }
+};
+
+const achievementStars = document.querySelectorAll('.achievement-star');
+const achievementDetail = document.querySelector('.achievement-detail');
+
+achievementStars.forEach(function(star) {
+  function showAchievement() {
+    const selectedAchievement = achievementDetails[star.dataset.achievement];
+
+    achievementStars.forEach(function(otherStar) {
+      otherStar.classList.remove('active-achievement');
+    });
+
+    star.classList.add('active-achievement');
+    achievementDetail.querySelector('.achievement-detail-label').textContent = selectedAchievement.label;
+    achievementDetail.querySelector('h3').textContent = selectedAchievement.title;
+    achievementDetail.querySelector('p:last-child').textContent = selectedAchievement.text;
+  }
+
+  star.addEventListener('click', showAchievement);
+  star.addEventListener('mouseenter', showAchievement);
 });

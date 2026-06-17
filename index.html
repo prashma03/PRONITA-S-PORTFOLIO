@@ -106,16 +106,36 @@
     <section class="scrapbook-section" id="achievements">
         <h2>achievements</h2>
 
-        <div class="scrapbook-cards">
-            <article class="scrapbook-card">
-                <h3>Chancellor's List</h3>
-                <p>Fall 2025 and Spring 2026.</p>
-            </article>
+        <div class="achievement-constellation">
+            <svg class="constellation-lines" viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true">
+                <polyline points="18,22 48,13 72,31 58,48 30,42" />
+            </svg>
 
-            <article class="scrapbook-card">
-                <h3>UAM Ambassador</h3>
-                <p>Starting Fall 2026, I will represent UAM as a student ambassador.</p>
-            </article>
+            <button class="achievement-star active-achievement" style="--x: 18%; --y: 22%;" data-achievement="fall-list">
+                <span></span>
+            </button>
+
+            <button class="achievement-star" style="--x: 48%; --y: 13%;" data-achievement="spring-list">
+                <span></span>
+            </button>
+
+            <button class="achievement-star" style="--x: 72%; --y: 31%;" data-achievement="ambassador">
+                <span></span>
+            </button>
+
+            <button class="achievement-star small-star" style="--x: 58%; --y: 48%;" data-achievement="growth">
+                <span></span>
+            </button>
+
+            <button class="achievement-star small-star" style="--x: 30%; --y: 42%;" data-achievement="balance">
+                <span></span>
+            </button>
+        </div>
+
+        <div class="achievement-detail">
+            <p class="achievement-detail-label">selected star</p>
+            <h3>Chancellor's List</h3>
+            <p>Fall 2025. A reminder that consistent effort, curiosity, and discipline can become something visible.</p>
         </div>
     </section>
 
@@ -146,23 +166,38 @@
     </section>
 
     <section class="scrapbook-section" id="hobbies">
-        <h2>hobbies</h2>
+        <h2>apart from coding...</h2>
 
-        <div class="scrapbook-cards">
-            <article class="scrapbook-card">
-                <h3>Dancing</h3>
-                <p>Movement, rhythm, expression, and storytelling through dance.</p>
-            </article>
+        <div class="hobby-grid">
+            <button class="hobby-tile active-hobby" data-hobby="dance">
+                <span class="hobby-symbol">♪</span>
+                <span class="hobby-name">Dancing</span>
+                <span class="hobby-short">rhythm, expression, kathak</span>
+            </button>
 
-            <article class="scrapbook-card">
-                <h3>Coding</h3>
-                <p>Building small worlds, solving problems, and learning one line at a time.</p>
-            </article>
+            <button class="hobby-tile" data-hobby="writing">
+                <span class="hobby-symbol">✎</span>
+                <span class="hobby-name">Creative Writing</span>
+                <span class="hobby-short">stories, reflection, voice</span>
+            </button>
 
-            <article class="scrapbook-card">
-                <h3>Creative Writing</h3>
-                <p>Writing reflections, ideas, stories, and little pieces of imagination.</p>
-            </article>
+            <button class="hobby-tile" data-hobby="reading">
+                <span class="hobby-symbol">⌁</span>
+                <span class="hobby-name">Reading</span>
+                <span class="hobby-short">ideas, research, curiosity</span>
+            </button>
+
+            <button class="hobby-tile" data-hobby="travel">
+                <span class="hobby-symbol">◇</span>
+                <span class="hobby-name">Travel</span>
+                <span class="hobby-short">local people, places, stories</span>
+            </button>
+        </div>
+
+        <div class="hobby-detail">
+            <p class="hobby-detail-label">currently open</p>
+            <h3>Dancing</h3>
+            <p>Dance gives me a different kind of discipline and expression. It connects movement, emotion, culture, and storytelling in a way that feels very natural to me.</p>
         </div>
     </section>
 
@@ -214,6 +249,13 @@
             <div class="contact-links">
                 <a href="https://www.linkedin.com/in/pronitaghimire3553/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 <a href="https://github.com/prashma03" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+
+            <div class="letter-note">
+                <p class="letter-label">write me a little letter</p>
+                <input class="letter-input" type="text" placeholder="your name">
+                <textarea class="letter-message" rows="4" placeholder="your message"></textarea>
+                <button class="send-letter">Send Letter</button>
             </div>
         </div>
     </div>
