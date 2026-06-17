@@ -1,3 +1,12 @@
+:root {
+    --night: #100b1f;
+    --night-deep: #080714;
+    --lavender: #cdbdff;
+    --lavender-soft: #f7d7ff;
+    --cream: #fff7df;
+    --blush: #f2728e;
+}
+
 h1 {
     font-family: "Edu NSW ACT Cursive", cursive;
     font-optical-sizing: auto;
@@ -23,6 +32,40 @@ h1 {
     transition: transform 0.1s ease-out, background-color 0.3s ease-out;
     align-items: center;
     box-shadow: 0px 0px 15px #f7adbd;
+}
+
+.cursor-ring {
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    z-index: 9997;
+    width: 42px;
+    height: 42px;
+    border: 1.5px solid rgba(205, 189, 255, 0.65);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 0px 18px rgba(205, 189, 255, 0.2);
+    transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+}
+
+.grain-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 180px;
+    animation: grain-drift 0.35s steps(1) infinite;
+}
+
+@keyframes grain-drift {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-3px, 2px); }
+    50% { transform: translate(2px, -2px); }
+    75% { transform: translate(-1px, 3px); }
+    100% { transform: translate(0, 0); }
 }
 :root {
     cursor: none;
@@ -207,6 +250,7 @@ body {
     scroll-behavior: smooth;
     --star-x: 0px;
     --star-y: 0px;
+    font-family: "DM Sans", sans-serif;
 }
 body.dark-mode .toggle-knob {
     left:42px;
@@ -245,7 +289,13 @@ body.paper-pulled .intro-page {
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0;
-    color: #f7d7ff;
+    font-family: "Playfair Display", serif;
+    font-style: normal;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff7df 0%, #cdbdff 45%, #f2728e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     text-shadow: 0px 0px 22px rgba(247, 215, 255, 0.35);
 }
 
@@ -277,7 +327,9 @@ body.paper-pulled .intro-page {
     transform: translateX(-50%);
     margin: 0;
     color: #fff7df;
-    font-size: 1.35rem;
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
 }
 
 .open-book-button {
@@ -292,12 +344,73 @@ body.paper-pulled .intro-page {
     border-radius: 999px;
     background-color: rgba(16, 11, 31, 0.35);
     color: #d8caff;
-    font-size: 1rem;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.88rem;
     letter-spacing: 4px;
     text-transform: uppercase;
     box-shadow: 0px 0px 24px rgba(188, 166, 255, 0.2);
     cursor: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.side-dots {
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+body.open-curtain .side-dots {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.side-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(205, 189, 255, 0.28);
+    cursor: none;
+    position: relative;
+    transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.side-dot::after {
+    content: attr(data-label);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 4px 9px;
+    border: 1px solid rgba(205, 189, 255, 0.22);
+    border-radius: 999px;
+    background-color: rgba(16, 11, 31, 0.82);
+    color: #f7d7ff;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.side-dot:hover,
+.side-dot.active-dot {
+    background-color: #cdbdff;
+    transform: scale(1.6);
+}
+
+.side-dot:hover::after {
+    opacity: 1;
 }
 
 .open-book-button:hover {
@@ -629,6 +742,15 @@ body.dark-mode .polaroid-page::before {
     animation: scroll-hint-float 1.8s ease-in-out infinite alternate;
 }
 
+.scroll-hint::before {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 46px;
+    margin: 0 auto 8px;
+    background: linear-gradient(to bottom, rgba(205, 189, 255, 0.75), transparent);
+}
+
 @keyframes scroll-hint-float {
     from {
         transform: translateX(-50%) translateY(0);
@@ -714,11 +836,24 @@ body.paper-pulled .scrapbook-menu {
 }
 
 .scrapbook-menu h2 {
-    font-family: "Edu NSW ACT Cursive", cursive;
+    font-family: "Playfair Display", serif;
     color: #f7d7ff;
-    font-size: 3.5em;
+    font-size: 3.8em;
+    font-weight: 900;
     margin: 0 0 50px;
     text-shadow: 0px 0px 22px rgba(247, 215, 255, 0.35);
+}
+
+.scrapbook-menu h2::before {
+    content: "Chapter Index";
+    display: block;
+    margin-bottom: 8px;
+    color: rgba(205, 189, 255, 0.62);
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
 }
 
 .menu-boxes {
@@ -779,12 +914,25 @@ body.paper-pulled .scrapbook-menu {
 }
 
 .scrapbook-section h2 {
-    font-family: "Edu NSW ACT Cursive", cursive;
+    font-family: "Playfair Display", serif;
     color: #f7d7ff;
-    font-size: 3.2em;
+    font-size: 3.4em;
+    font-weight: 900;
     margin: 0 0 40px;
     text-align: center;
     text-shadow: 0px 0px 22px rgba(247, 215, 255, 0.35);
+}
+
+.scrapbook-section h2::before {
+    content: "Open Page";
+    display: block;
+    margin-bottom: 8px;
+    color: rgba(205, 189, 255, 0.62);
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
 }
 
 .scrapbook-cards {

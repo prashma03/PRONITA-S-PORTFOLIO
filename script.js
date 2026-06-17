@@ -1,13 +1,16 @@
 const cursordot = document.querySelector('.cursor-dot');
+const cursorRing = document.querySelector('.cursor-ring');
 let targetStarX = 0;
 let targetStarY = 0;
 let currentStarX = 0;
 let currentStarY = 0;
+let ringX = window.innerWidth / 2;
+let ringY = window.innerHeight / 2;
 
 document.addEventListener('mousemove', function(event){
     
-    cursordot.style.left = event.pageX + 'px';
-    cursordot.style.top = event.pageY + 'px';
+    cursordot.style.left = event.clientX + 'px';
+    cursordot.style.top = event.clientY + 'px';
 
     targetStarX = (event.clientX / window.innerWidth - 0.5) * 28;
     targetStarY = (event.clientY / window.innerHeight - 0.5) * 28;
@@ -34,6 +37,32 @@ function moveStars() {
 }
 
 moveStars();
+
+function moveCursorRing() {
+  ringX = ringX + ((parseFloat(cursordot.style.left) || ringX) - ringX) * 0.16;
+  ringY = ringY + ((parseFloat(cursordot.style.top) || ringY) - ringY) * 0.16;
+
+  cursorRing.style.left = ringX + 'px';
+  cursorRing.style.top = ringY + 'px';
+
+  requestAnimationFrame(moveCursorRing);
+}
+
+moveCursorRing();
+
+document.querySelectorAll('button, a').forEach(function(element) {
+  element.addEventListener('mouseenter', function() {
+    cursorRing.style.width = '58px';
+    cursorRing.style.height = '58px';
+    cursorRing.style.borderColor = 'rgba(247, 215, 255, 0.9)';
+  });
+
+  element.addEventListener('mouseleave', function() {
+    cursorRing.style.width = '42px';
+    cursorRing.style.height = '42px';
+    cursorRing.style.borderColor = 'rgba(205, 189, 255, 0.65)';
+  });
+});
 const toggleButton = document.querySelector('.toggle');
 toggleButton.addEventListener('click', function() {
   console.log('Toggle button clicked');
@@ -69,6 +98,7 @@ const openBookButton = document.querySelector('.open-book-button');
 
 function openCurtain() {
   document.body.classList.add('open-curtain');
+  setActiveDot('polaroid-page');
 }
 
 mainTitle.addEventListener('click', openCurtain);
@@ -92,6 +122,7 @@ window.addEventListener('wheel', function(event) {
     event.preventDefault();
     paperHasPulled = true;
     document.body.classList.add('paper-pulled');
+    setActiveDot('scrapbook-menu');
 
     window.scrollTo({
       top: window.innerHeight,
@@ -102,6 +133,13 @@ window.addEventListener('wheel', function(event) {
 
 const menuButtons = document.querySelectorAll('.menu-boxes button');
 const backToPolaroidButton = document.querySelector('.back-to-polaroid');
+const sideDots = document.querySelectorAll('.side-dot');
+
+function setActiveDot(sectionId) {
+  sideDots.forEach(function(dot) {
+    dot.classList.toggle('active-dot', dot.dataset.jump === sectionId);
+  });
+}
 
 backToPolaroidButton.addEventListener('click', function() {
   const allSections = document.querySelectorAll('.scrapbook-section');
@@ -120,6 +158,7 @@ backToPolaroidButton.addEventListener('click', function() {
   setTimeout(function() {
     document.body.classList.remove('paper-pulled');
     paperHasPulled = false;
+    setActiveDot('polaroid-page');
   }, 120);
 });
 
@@ -134,9 +173,51 @@ menuButtons.forEach(function(button) {
     });
 
     section.classList.add('active-section');
+    setActiveDot(sectionId);
 
     section.scrollIntoView({
       behavior: 'smooth'
     });
+  });
+});
+
+sideDots.forEach(function(dot) {
+  dot.addEventListener('click', function() {
+    const sectionId = dot.dataset.jump;
+    const allSections = document.querySelectorAll('.scrapbook-section');
+
+    allSections.forEach(function(scrapbookSection) {
+      scrapbookSection.classList.remove('active-section');
+    });
+
+    document.body.classList.add('open-curtain');
+
+    if (sectionId === 'polaroid-page') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+
+      setTimeout(function() {
+        document.body.classList.remove('paper-pulled');
+        paperHasPulled = false;
+        setActiveDot('polaroid-page');
+      }, 120);
+
+      return;
+    }
+
+    document.body.classList.add('paper-pulled');
+    paperHasPulled = true;
+
+    if (sectionId !== 'scrapbook-menu') {
+      document.querySelector('#' + sectionId).classList.add('active-section');
+    }
+
+    document.querySelector('#' + sectionId).scrollIntoView({
+      behavior: 'smooth'
+    });
+
+    setActiveDot(sectionId);
   });
 });
