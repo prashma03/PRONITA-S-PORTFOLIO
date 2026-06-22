@@ -1190,39 +1190,81 @@ body.paper-pulled .scrapbook-menu {
     color: #2d2338;
 }
 
+#achievements {
+    justify-content: center;
+    padding: 0;
+}
+
+#achievements > h2 {
+    display: none;
+}
+
 .achievement-constellation {
-    width: min(900px, 86vw);
-    height: 390px;
-    margin: 0 auto 30px;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
     position: relative;
-    border: 1px solid rgba(205, 189, 255, 0.14);
-    border-radius: 8px;
+    border: none;
+    border-radius: 0;
     background:
-        radial-gradient(circle at 60% 40%, rgba(242, 114, 142, 0.13), transparent 34%),
+        radial-gradient(circle at 39% 36%, rgba(245, 181, 68, 0.16), transparent 18%),
+        radial-gradient(circle at 18% 28%, rgba(188, 166, 255, 0.16), transparent 20%),
+        radial-gradient(circle at 88% 72%, rgba(240, 127, 154, 0.12), transparent 24%),
+        radial-gradient(circle at 62% 58%, rgba(168, 217, 176, 0.08), transparent 20%),
         radial-gradient(circle, rgba(255, 255, 255, 0.9) 0 1px, transparent 2px),
+        radial-gradient(circle, rgba(205, 189, 255, 0.78) 0 1px, transparent 2px),
         radial-gradient(circle, rgba(255, 247, 200, 0.75) 0 1px, transparent 2px),
-        rgba(16, 11, 31, 0.42);
-    background-size: 100% 100%, 120px 120px, 190px 190px, 100% 100%;
+        linear-gradient(145deg, #060611 0%, #0b0a18 42%, #17102c 100%);
+    background-size:
+        100% 100%,
+        100% 100%,
+        100% 100%,
+        100% 100%,
+        86px 86px,
+        132px 132px,
+        210px 210px,
+        100% 100%;
     background-position:
         center,
+        center,
+        center,
+        center,
         calc(12px + var(--star-x)) calc(22px + var(--star-y)),
+        calc(46px - var(--star-x)) calc(72px + var(--star-y)),
         calc(64px - var(--star-x)) calc(88px - var(--star-y)),
         center;
     overflow: hidden;
     box-shadow:
-        0px 18px 42px rgba(0, 0, 0, 0.22),
-        0px 0px 28px rgba(188, 166, 255, 0.12);
+        inset 0px 0px 110px rgba(4, 4, 13, 0.88),
+        inset 0px -60px 120px rgba(242, 114, 142, 0.08);
 }
 
 .achievement-constellation::before {
-    content: "hover or click a star";
+    content: "";
     position: absolute;
-    top: 18px;
-    left: 22px;
-    color: rgba(205, 189, 255, 0.62);
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    inset: 0;
+    background:
+        linear-gradient(100deg, transparent 0 42%, rgba(188, 166, 255, 0.08) 50%, transparent 58%),
+        radial-gradient(circle at 6% 8%, rgba(188, 166, 255, 0.34), transparent 2.7%),
+        radial-gradient(circle at 98% 7%, rgba(247, 215, 255, 0.2), transparent 2%);
+    opacity: 0.75;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.achievement-constellation::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 14% 72%, rgba(255, 255, 255, 0.78) 0 1px, transparent 2px),
+        radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.86) 0 1px, transparent 2px),
+        radial-gradient(circle at 66% 16%, rgba(255, 247, 200, 0.7) 0 1px, transparent 2px),
+        radial-gradient(circle at 35% 82%, rgba(205, 189, 255, 0.86) 0 1px, transparent 2px);
+    opacity: 0.8;
+    animation: stars-twinkle 2.8s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 2;
 }
 
 .constellation-lines {
@@ -1231,41 +1273,165 @@ body.paper-pulled .scrapbook-menu {
     width: 100%;
     height: 100%;
     pointer-events: none;
+    z-index: 3;
 }
 
 .constellation-lines polyline {
     fill: none;
-    stroke: rgba(205, 189, 255, 0.34);
-    stroke-width: 0.35;
-    stroke-dasharray: 2 2;
-    filter: drop-shadow(0px 0px 5px rgba(205, 189, 255, 0.32));
+    stroke: rgba(205, 189, 255, 0.16);
+    stroke-width: 0.34;
+    stroke-dasharray: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter:
+        drop-shadow(0px 0px 4px rgba(205, 189, 255, 0.26))
+        drop-shadow(0px 0px 14px rgba(242, 114, 142, 0.12));
+}
+
+.constellation-title {
+    position: absolute;
+    left: 50%;
+    top: 51%;
+    width: min(760px, 90vw);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.constellation-title p {
+    margin: 0 0 16px;
+    color: rgba(205, 189, 255, 0.58);
+    font-size: 0.82rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+}
+
+.constellation-title h3 {
+    margin: 0;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 0.92;
+    color: #fff7df;
+    text-shadow:
+        0px 0px 18px rgba(247, 215, 255, 0.3),
+        0px 0px 46px rgba(188, 166, 255, 0.16);
+}
+
+.constellation-title h3::first-letter {
+    color: #cdbdff;
+    font-style: italic;
+}
+
+.constellation-title span {
+    display: inline-block;
+    margin-top: 24px;
+    font-family: "Edu NSW ACT Cursive", cursive;
+    color: rgba(205, 189, 255, 0.55);
+    font-size: 1rem;
+}
+
+.shooting-star {
+    position: absolute;
+    width: 150px;
+    height: 1px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), rgba(247, 215, 255, 0.7), transparent);
+    filter: drop-shadow(0px 0px 8px rgba(247, 215, 255, 0.85));
+    opacity: 0;
+    transform: rotate(-23deg);
+    z-index: 4;
+    pointer-events: none;
+}
+
+.shooting-star::after {
+    content: "";
+    position: absolute;
+    right: 28px;
+    top: -2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #fff7df;
+    box-shadow: 0px 0px 14px rgba(255, 247, 223, 0.95);
+}
+
+.shooting-star-one {
+    left: -12%;
+    top: 18%;
+    animation: shooting-star-move 5.8s ease-in-out infinite;
+}
+
+.shooting-star-two {
+    left: 36%;
+    top: 8%;
+    width: 110px;
+    animation: shooting-star-move 7s ease-in-out 2.2s infinite;
+}
+
+.shooting-star-three {
+    left: 58%;
+    top: 76%;
+    width: 120px;
+    animation: shooting-star-move 8.6s ease-in-out 4s infinite;
+}
+
+.ambient-star {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color);
+    box-shadow:
+        0px 0px 18px var(--glow),
+        0px 0px 48px var(--glow);
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    animation: stars-twinkle 2.5s ease-in-out infinite alternate;
 }
 
 .achievement-star {
     position: absolute;
     left: var(--x);
     top: var(--y);
-    width: 28px;
-    height: 28px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     border: none;
     border-radius: 50%;
     background: transparent;
     transform: translate(-50%, -50%);
     cursor: none;
+    z-index: 6;
 }
 
 .achievement-star span {
+    position: relative;
     display: block;
-    width: 12px;
-    height: 12px;
-    margin: 8px;
+    width: 17px;
+    height: 17px;
+    margin: 13.5px;
     border-radius: 50%;
-    background-color: #f7d7ff;
+    background:
+        radial-gradient(circle, #ffffff 0 12%, var(--color) 18% 100%);
     box-shadow:
-        0px 0px 12px rgba(247, 215, 255, 0.9),
-        0px 0px 28px rgba(242, 114, 142, 0.42);
+        0px 0px 12px rgba(255, 255, 255, 0.9),
+        0px 0px 28px var(--glow),
+        0px 0px 70px var(--glow);
     transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+    animation: stars-twinkle 2.4s ease-in-out infinite alternate;
+}
+
+.achievement-star span::before {
+    content: "";
+    position: absolute;
+    inset: -26px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow), transparent 64%);
+    opacity: 0.8;
+    z-index: -1;
 }
 
 .achievement-star::before,
@@ -1274,11 +1440,11 @@ body.paper-pulled .scrapbook-menu {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 34px;
+    width: 42px;
     height: 1px;
-    background-color: rgba(247, 215, 255, 0.45);
+    background: linear-gradient(90deg, transparent, rgba(247, 215, 255, 0.78), transparent);
     transform: translate(-50%, -50%);
-    opacity: 0;
+    opacity: 0.46;
     transition: opacity 0.25s ease;
 }
 
@@ -1288,11 +1454,11 @@ body.paper-pulled .scrapbook-menu {
 
 .achievement-star:hover span,
 .achievement-star.active-achievement span {
-    transform: scale(1.55);
-    background-color: #f2728e;
+    transform: scale(2.2);
     box-shadow:
-        0px 0px 14px rgba(242, 114, 142, 0.95),
-        0px 0px 38px rgba(247, 215, 255, 0.5);
+        0px 0px 16px rgba(255, 255, 255, 0.95),
+        0px 0px 42px var(--glow),
+        0px 0px 100px var(--glow);
 }
 
 .achievement-star:hover::before,
@@ -1303,27 +1469,35 @@ body.paper-pulled .scrapbook-menu {
 }
 
 .small-star span {
-    width: 9px;
-    height: 9px;
-    margin: 9.5px;
+    width: 14px;
+    height: 14px;
+    margin: 15px;
 }
 
 .achievement-detail {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 28px 32px;
-    border: 1px solid rgba(205, 189, 255, 0.32);
+    width: min(310px, 82vw);
+    margin: 0;
+    padding: 20px 22px;
+    position: absolute;
+    left: 40%;
+    top: 30%;
+    z-index: 7;
+    border: 1px solid rgba(205, 189, 255, 0.84);
     border-radius: 8px;
-    background-color: rgba(255, 247, 250, 0.94);
-    color: #120817;
+    background:
+        radial-gradient(circle at 88% 18%, rgba(245, 181, 68, 0.16), transparent 26%),
+        rgba(11, 9, 26, 0.92);
+    color: #fff7df;
+    backdrop-filter: blur(10px);
     box-shadow:
-        0px 14px 34px rgba(0, 0, 0, 0.24),
-        0px 0px 26px rgba(188, 166, 255, 0.18);
+        0px 18px 42px rgba(0, 0, 0, 0.34),
+        0px 0px 28px rgba(188, 166, 255, 0.22);
+    transform: translate(-50%, -50%);
 }
 
 .achievement-detail-label {
     margin: 0 0 8px;
-    color: rgba(242, 114, 142, 0.72);
+    color: rgba(247, 215, 255, 0.7);
     font-size: 0.72rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -1332,13 +1506,15 @@ body.paper-pulled .scrapbook-menu {
 .achievement-detail h3 {
     font-family: "Edu NSW ACT Cursive", cursive;
     color: #f2728e;
-    font-size: 2rem;
-    margin: 0 0 12px;
+    font-size: 1.45rem;
+    margin: 0 0 8px;
 }
 
 .achievement-detail p {
-    line-height: 1.65;
+    line-height: 1.55;
     margin: 0;
+    color: rgba(255, 247, 223, 0.8);
+    font-size: 0.95rem;
 }
 
 .hobby-grid {
@@ -1579,6 +1755,31 @@ body.dark-mode .goal-note p:last-child {
     }
 }
 
+@keyframes shooting-star-move {
+    0% {
+        opacity: 0;
+        transform: translate3d(-160px, -20px, 0) rotate(-23deg);
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    18% {
+        opacity: 0.9;
+    }
+
+    34% {
+        opacity: 0;
+        transform: translate3d(760px, 230px, 0) rotate(-23deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate3d(760px, 230px, 0) rotate(-23deg);
+    }
+}
+
 @media (max-width: 760px) {
     .goals-planner {
         grid-template-columns: 1fr;
@@ -1591,5 +1792,14 @@ body.dark-mode .goal-note p:last-child {
 
     .goal-note h3 {
         font-size: 1.85rem;
+    }
+
+    .constellation-title h3 {
+        font-size: 3rem;
+    }
+
+    .achievement-detail {
+        left: 50% !important;
+        top: 72% !important;
     }
 }

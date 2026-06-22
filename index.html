@@ -107,35 +107,51 @@
         <h2>achievements</h2>
 
         <div class="achievement-constellation">
-            <svg class="constellation-lines" viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true">
-                <polyline points="18,22 48,13 72,31 58,48 30,42" />
+            <span class="shooting-star shooting-star-one"></span>
+            <span class="shooting-star shooting-star-two"></span>
+            <span class="shooting-star shooting-star-three"></span>
+
+            <span class="ambient-star" style="--x: 18%; --y: 76%; --color: #a8d9b0; --glow: rgba(168, 217, 176, 0.38);"></span>
+            <span class="ambient-star" style="--x: 77%; --y: 68%; --color: #f5b544; --glow: rgba(245, 181, 68, 0.42);"></span>
+            <span class="ambient-star" style="--x: 47%; --y: 83%; --color: #bca6ff; --glow: rgba(188, 166, 255, 0.36);"></span>
+            <span class="ambient-star" style="--x: 88%; --y: 35%; --color: #f07f9a; --glow: rgba(240, 127, 154, 0.45);"></span>
+
+            <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <polyline points="12,34 32,17 50,46 64,24 82,36 72,62 54,50 46,82 30,70 12,34" />
+                <polyline points="12,34 30,70 50,46 82,36" />
             </svg>
 
-            <button class="achievement-star active-achievement" style="--x: 18%; --y: 22%;" data-achievement="fall-list">
+            <div class="constellation-title">
+                <p>chapter ii · hover the stars</p>
+                <h3>A Constellation of Achievements</h3>
+                <span>watch for shooting stars ✦</span>
+            </div>
+
+            <button class="achievement-star active-achievement" style="--x: 12%; --y: 34%; --color: #bca6ff; --glow: rgba(188, 166, 255, 0.58);" data-achievement="fall-list">
                 <span></span>
             </button>
 
-            <button class="achievement-star" style="--x: 48%; --y: 13%;" data-achievement="spring-list">
+            <button class="achievement-star" style="--x: 32%; --y: 17%; --color: #f07f9a; --glow: rgba(240, 127, 154, 0.58);" data-achievement="spring-list">
                 <span></span>
             </button>
 
-            <button class="achievement-star" style="--x: 72%; --y: 31%;" data-achievement="ambassador">
+            <button class="achievement-star" style="--x: 64%; --y: 24%; --color: #a8d9b0; --glow: rgba(168, 217, 176, 0.58);" data-achievement="ambassador">
                 <span></span>
             </button>
 
-            <button class="achievement-star small-star" style="--x: 58%; --y: 48%;" data-achievement="growth">
+            <button class="achievement-star small-star" style="--x: 72%; --y: 62%; --color: #f5b544; --glow: rgba(245, 181, 68, 0.58);" data-achievement="growth">
                 <span></span>
             </button>
 
-            <button class="achievement-star small-star" style="--x: 30%; --y: 42%;" data-achievement="balance">
+            <button class="achievement-star small-star" style="--x: 30%; --y: 70%; --color: #f07f9a; --glow: rgba(240, 127, 154, 0.58);" data-achievement="balance">
                 <span></span>
             </button>
-        </div>
 
-        <div class="achievement-detail">
-            <p class="achievement-detail-label">selected star</p>
-            <h3>Chancellor's List</h3>
-            <p>Fall 2025. A reminder that consistent effort, curiosity, and discipline can become something visible.</p>
+            <div class="achievement-detail">
+                <p class="achievement-detail-label">selected star</p>
+                <h3>Chancellor's List</h3>
+                <p>Fall 2025. A reminder that consistent effort, curiosity, and discipline can become something visible.</p>
+            </div>
         </div>
     </section>
 

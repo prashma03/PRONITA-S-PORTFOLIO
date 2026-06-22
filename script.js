@@ -310,6 +310,8 @@ achievementStars.forEach(function(star) {
     achievementDetail.querySelector('.achievement-detail-label').textContent = selectedAchievement.label;
     achievementDetail.querySelector('h3').textContent = selectedAchievement.title;
     achievementDetail.querySelector('p:last-child').textContent = selectedAchievement.text;
+    achievementDetail.style.left = 'min(calc(' + star.style.getPropertyValue('--x') + ' + 130px), calc(100% - 180px))';
+    achievementDetail.style.top = 'max(calc(' + star.style.getPropertyValue('--y') + ' - 44px), 120px)';
   }
 
   star.addEventListener('click', showAchievement);
