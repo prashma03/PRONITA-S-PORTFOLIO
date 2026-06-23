@@ -283,6 +283,11 @@ const achievementDetails = {
     title: 'UAM Ambassador',
     text: 'Starting Fall 2026, I will represent UAM as a student ambassador, welcoming others with the same grounded confidence I am building for myself.'
   },
+  'resident-assistant': {
+    label: 'leadership star',
+    title: 'Resident Assistant',
+    text: 'Appointed as a Resident Assistant for Fall 2026, a role where I can support students, build community, and grow as a grounded campus leader.'
+  },
   growth: {
     label: 'growth star',
     title: 'Academic Growth',
