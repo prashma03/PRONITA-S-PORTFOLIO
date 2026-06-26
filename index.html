@@ -236,9 +236,16 @@
         </div>
 
         <div class="hobby-detail">
-            <p class="hobby-detail-label">currently open</p>
-            <h3>Dancing</h3>
-            <p>Dance gives me a different kind of discipline and expression. It connects movement, emotion, culture, and storytelling in a way that feels very natural to me.</p>
+            <figure class="hobby-photo-frame">
+                <img class="hobby-photo" src="dance.jpg" alt="Pronita dancing Kathak">
+                <figcaption>Kathak rhythm</figcaption>
+            </figure>
+
+            <div class="hobby-copy">
+                <p class="hobby-detail-label">currently open</p>
+                <h3>Dancing</h3>
+                <p>Kathak is one of the ways I understand discipline, expression, and storytelling. The rhythm, footwork, spins, and gestures make dance feel both intellectual and emotional to me, almost like solving a pattern while still leaving room for feeling.</p>
+            </div>
         </div>
     </section>
 
@@ -292,12 +299,44 @@
                 <a href="https://github.com/prashma03" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
 
-            <div class="letter-note">
+            <form class="letter-note letter-form" method="POST">
                 <p class="letter-label">write me a little letter</p>
-                <input class="letter-input" type="text" placeholder="your name">
-                <textarea class="letter-message" rows="4" placeholder="your message"></textarea>
-                <button class="send-letter">Send Letter</button>
+                <input class="letter-input" name="name" type="text" placeholder="your name" required>
+                <input class="letter-input" name="email" type="email" placeholder="your email" required>
+                <textarea class="letter-message" name="message" rows="4" placeholder="your message" required></textarea>
+                <input type="hidden" name="_subject" value="New letter from Pronita's portfolio">
+                <button class="send-letter" type="submit">Send Letter</button>
+                <p class="letter-status"></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="ai-widget">
+        <button class="ai-button" aria-label="Open AI chat">AI</button>
+
+        <div class="ai-panel">
+            <div class="ai-header">
+                <div>
+                    <p>portfolio guide</p>
+                    <h3>Ask about Pronita</h3>
+                </div>
+                <button class="ai-close" aria-label="Close AI chat">×</button>
             </div>
+
+            <div class="ai-messages" aria-live="polite">
+                <div class="ai-message bot-message">Hi, I can tell you about Pronita's projects, achievements, goals, hobbies, research, and contact info.</div>
+            </div>
+
+            <div class="ai-suggestions">
+                <button type="button" data-question="projects">Projects</button>
+                <button type="button" data-question="achievements">Achievements</button>
+                <button type="button" data-question="hobbies">Hobbies</button>
+            </div>
+
+            <form class="ai-form">
+                <input class="ai-input" type="text" placeholder="Ask a question...">
+                <button class="ai-send" type="submit">Send</button>
+            </form>
         </div>
     </div>
 
@@ -307,6 +346,7 @@
         <span class="toggle-knob"></span>
     </button>
 
+    <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

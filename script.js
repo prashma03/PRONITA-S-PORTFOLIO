@@ -50,6 +50,181 @@ function moveCursorRing() {
 
 moveCursorRing();
 
+function createCard(item) {
+  const card = document.createElement('article');
+  card.className = 'scrapbook-card';
+
+  const title = document.createElement('h3');
+  title.textContent = item.title;
+
+  const text = document.createElement('p');
+  text.textContent = item.text;
+
+  card.appendChild(title);
+  card.appendChild(text);
+
+  if (item.link) {
+    const link = document.createElement('a');
+    link.className = 'scrapbook-link';
+    link.href = item.link;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = item.linkText || 'Open link';
+    card.appendChild(link);
+  }
+
+  return card;
+}
+
+function renderCards(sectionId, items) {
+  const container = document.querySelector('#' + sectionId + ' .scrapbook-cards');
+
+  if (!container || !items) {
+    return;
+  }
+
+  container.innerHTML = '';
+
+  items.forEach(function(item) {
+    container.appendChild(createCard(item));
+  });
+}
+
+function renderPortfolioData() {
+  if (typeof portfolioData === 'undefined') {
+    return;
+  }
+
+  const owner = portfolioData.owner;
+  const contact = portfolioData.contact;
+
+  document.title = owner.portfolioTitle;
+  document.querySelector('.intro-label').textContent = owner.introLabel;
+  document.querySelector('.title-left').textContent = owner.firstName + "'s";
+  document.querySelector('.title-right').textContent = 'Portfolio';
+  document.querySelector('.role-line').textContent = owner.roleLine;
+  document.querySelector('.polaroid-img').src = owner.photo;
+  document.querySelector('.polaroid-img').alt = owner.fullName;
+  document.querySelector('.polaroid p').textContent = owner.photoCaption;
+  document.querySelector('.intro-text p').textContent = owner.bio;
+
+  document.querySelector('.contact-card > p:first-of-type').textContent = owner.fullName;
+  document.querySelector('.contact-card > p:nth-of-type(2)').textContent = contact.subtitle;
+  document.querySelector('.email-text').textContent = contact.email;
+  document.querySelector('.contact-links a:first-child').href = contact.linkedin;
+  document.querySelector('.contact-links a:last-child').href = contact.github;
+
+  const letterForm = document.querySelector('.letter-form');
+
+  if (contact.formEndpoint) {
+    letterForm.action = contact.formEndpoint;
+  }
+
+  renderCards('projects', portfolioData.projects);
+  renderCards('research', portfolioData.research);
+  renderCards('hackathons', portfolioData.hackathons);
+
+  window.portfolioTemplateState = {
+    achievementDetails: {},
+    goalDetails: {},
+    hobbyDetails: {}
+  };
+
+  const achievementStars = document.querySelectorAll('.achievement-star');
+
+  portfolioData.achievements.forEach(function(achievement, index) {
+    const star = achievementStars[index];
+
+    window.portfolioTemplateState.achievementDetails[achievement.id] = {
+      label: achievement.label,
+      title: achievement.title,
+      text: achievement.text
+    };
+
+    if (star) {
+      star.dataset.achievement = achievement.id;
+      star.style.setProperty('--x', achievement.x);
+      star.style.setProperty('--y', achievement.y);
+      star.style.setProperty('--color', achievement.color);
+      star.style.setProperty('--glow', achievement.glow);
+    }
+  });
+
+  const firstAchievement = portfolioData.achievements[0];
+  document.querySelector('.achievement-detail-label').textContent = firstAchievement.label;
+  document.querySelector('.achievement-detail h3').textContent = firstAchievement.title;
+  document.querySelector('.achievement-detail p:last-child').textContent = firstAchievement.text;
+
+  const goalsList = document.querySelector('.goals-list');
+  const goalNote = document.querySelector('.goal-note');
+  goalsList.innerHTML = '';
+
+  portfolioData.goals.forEach(function(goal, index) {
+    window.portfolioTemplateState.goalDetails[goal.id] = {
+      label: goal.label,
+      title: goal.title,
+      text: goal.text
+    };
+
+    const button = document.createElement('button');
+    button.className = 'goal-task';
+    button.dataset.goal = goal.id;
+
+    if (index === 0) {
+      button.classList.add('active-goal');
+      goalNote.querySelector('.goal-note-label').textContent = goal.label;
+      goalNote.querySelector('h3').textContent = goal.title;
+      goalNote.querySelector('p:last-child').textContent = goal.text;
+    }
+
+    button.innerHTML = '<span class="goal-check"></span><span><strong></strong><small></small></span>';
+    button.querySelector('strong').textContent = goal.title;
+    button.querySelector('small').textContent = goal.short;
+    goalsList.appendChild(button);
+  });
+
+  const hobbyGrid = document.querySelector('.hobby-grid');
+  hobbyGrid.innerHTML = '';
+
+  portfolioData.hobbies.forEach(function(hobby, index) {
+    window.portfolioTemplateState.hobbyDetails[hobby.id] = {
+      title: hobby.title,
+      text: hobby.text,
+      image: hobby.image || '',
+      caption: hobby.caption || ''
+    };
+
+    const button = document.createElement('button');
+    button.className = 'hobby-tile';
+    button.dataset.hobby = hobby.id;
+
+    if (index === 0) {
+      button.classList.add('active-hobby');
+      document.querySelector('.hobby-copy h3').textContent = hobby.title;
+      document.querySelector('.hobby-copy p:last-child').textContent = hobby.text;
+      document.querySelector('.hobby-photo').src = hobby.image || '';
+      document.querySelector('.hobby-photo').alt = hobby.title;
+      document.querySelector('.hobby-photo-frame figcaption').textContent = hobby.caption || '';
+    }
+
+    button.innerHTML = '<span class="hobby-symbol"></span><span class="hobby-name"></span><span class="hobby-short"></span>';
+    button.querySelector('.hobby-symbol').textContent = hobby.symbol;
+    button.querySelector('.hobby-name').textContent = hobby.title;
+    button.querySelector('.hobby-short').textContent = hobby.short;
+    hobbyGrid.appendChild(button);
+  });
+}
+
+renderPortfolioData();
+
+document.querySelectorAll('.scrapbook-section').forEach(function(section) {
+  const backButton = document.createElement('button');
+  backButton.className = 'section-back-button';
+  backButton.type = 'button';
+  backButton.textContent = 'Back to Pages';
+  section.prepend(backButton);
+});
+
 document.querySelectorAll('button, a').forEach(function(element) {
   element.addEventListener('mouseenter', function() {
     cursorRing.style.width = '58px';
@@ -74,6 +249,8 @@ const contactButton = document.querySelector('.contact-button');
 const copyEmailButton = document.querySelector('.copy-email');
 const emailText = document.querySelector('.email-text');
 const sendLetterButton = document.querySelector('.send-letter');
+const letterForm = document.querySelector('.letter-form');
+const letterStatus = document.querySelector('.letter-status');
 
 contactButton.addEventListener('click', function() {
   contactWidget.classList.toggle('open');
@@ -94,12 +271,17 @@ copyEmailButton.addEventListener('click', function() {
   }, 1200);
 });
 
-sendLetterButton.addEventListener('click', function() {
-  sendLetterButton.textContent = 'Letter Saved';
+letterForm.addEventListener('submit', function(event) {
+  const hasEndpoint = letterForm.action && !letterForm.action.endsWith(window.location.pathname);
 
-  setTimeout(function() {
-    sendLetterButton.textContent = 'Send Letter';
-  }, 1400);
+  if (!hasEndpoint) {
+    event.preventDefault();
+    letterStatus.textContent = 'Add a Formspree endpoint in data.js so this letter can arrive in Gmail.';
+    return;
+  }
+
+  sendLetterButton.textContent = 'Sending...';
+  letterStatus.textContent = 'Sending your letter...';
 });
 
 const mainTitle = document.querySelector('#main-title');
@@ -143,6 +325,7 @@ window.addEventListener('wheel', function(event) {
 const menuButtons = document.querySelectorAll('.menu-boxes button');
 const backToPolaroidButton = document.querySelector('.back-to-polaroid');
 const sideDots = document.querySelectorAll('.side-dot');
+const sectionBackButtons = document.querySelectorAll('.section-back-button');
 
 function setActiveDot(sectionId) {
   sideDots.forEach(function(dot) {
@@ -169,6 +352,24 @@ backToPolaroidButton.addEventListener('click', function() {
     paperHasPulled = false;
     setActiveDot('polaroid-page');
   }, 120);
+});
+
+sectionBackButtons.forEach(function(button) {
+  button.addEventListener('click', function() {
+    const allSections = document.querySelectorAll('.scrapbook-section');
+
+    allSections.forEach(function(scrapbookSection) {
+      scrapbookSection.classList.remove('active-section');
+    });
+
+    document.body.classList.add('open-curtain', 'paper-pulled');
+    paperHasPulled = true;
+    setActiveDot('scrapbook-menu');
+
+    document.querySelector('#scrapbook-menu').scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
 });
 
 menuButtons.forEach(function(button) {
@@ -231,30 +432,41 @@ sideDots.forEach(function(dot) {
   });
 });
 
-const hobbyDetails = {
+const hobbyDetails = window.portfolioTemplateState?.hobbyDetails || {
   dance: {
     title: 'Dancing',
-    text: 'Dance gives me a different kind of discipline and expression. It connects movement, emotion, culture, and storytelling in a way that feels very natural to me.'
+    text: 'Kathak is one of the ways I understand discipline, expression, and storytelling. The rhythm, footwork, spins, and gestures make dance feel both intellectual and emotional to me, almost like solving a pattern while still leaving room for feeling.',
+    image: 'dance.jpg',
+    caption: 'Kathak rhythm'
   },
   writing: {
     title: 'Creative Writing',
-    text: 'Writing helps me slow down and understand my thoughts better. I like turning small observations, feelings, and ideas into something with voice and shape.'
+    text: 'Writing helps me slow down and understand my thoughts better. I like turning small observations, feelings, and ideas into something with voice and shape.',
+    image: '',
+    caption: ''
   },
   reading: {
     title: 'Reading',
-    text: 'Reading keeps me curious. Whether it is research, technology, or reflective writing, I like learning how other people think and seeing the world through different perspectives.'
+    text: 'Reading keeps me curious. Whether it is research, technology, or reflective writing, I like learning how other people think and seeing the world through different perspectives.',
+    image: '',
+    caption: ''
   },
   travel: {
     title: 'Travel',
-    text: 'I want to travel for fun, but also to know local people and their stories. I think places teach you things that classrooms and screens cannot always teach.'
+    text: 'I want to travel for fun, but also to know local people and their stories. I think places teach you things that classrooms and screens cannot always teach.',
+    image: '',
+    caption: ''
   }
 };
 
 const hobbyTiles = document.querySelectorAll('.hobby-tile');
 const hobbyDetail = document.querySelector('.hobby-detail');
+const hobbyPhotoFrame = document.querySelector('.hobby-photo-frame');
+const hobbyPhoto = document.querySelector('.hobby-photo');
+const hobbyPhotoCaption = document.querySelector('.hobby-photo-frame figcaption');
 
 hobbyTiles.forEach(function(tile) {
-  tile.addEventListener('click', function() {
+  function showHobby() {
     const selectedHobby = hobbyDetails[tile.dataset.hobby];
 
     hobbyTiles.forEach(function(otherTile) {
@@ -264,10 +476,34 @@ hobbyTiles.forEach(function(tile) {
     tile.classList.add('active-hobby');
     hobbyDetail.querySelector('h3').textContent = selectedHobby.title;
     hobbyDetail.querySelector('p:last-child').textContent = selectedHobby.text;
-  });
+
+    if (selectedHobby.image) {
+      hobbyPhotoFrame.classList.add('hidden-photo');
+      hobbyPhoto.src = selectedHobby.image;
+      hobbyPhoto.alt = 'Pronita dancing Kathak';
+      hobbyPhotoCaption.textContent = selectedHobby.caption;
+
+      if (hobbyPhoto.complete && hobbyPhoto.naturalWidth > 0) {
+        hobbyPhotoFrame.classList.remove('hidden-photo');
+      }
+    } else {
+      hobbyPhotoFrame.classList.add('hidden-photo');
+    }
+  }
+
+  tile.addEventListener('click', showHobby);
+  tile.addEventListener('mouseenter', showHobby);
 });
 
-const achievementDetails = {
+hobbyPhoto.addEventListener('error', function() {
+  hobbyPhotoFrame.classList.add('hidden-photo');
+});
+
+hobbyPhoto.addEventListener('load', function() {
+  hobbyPhotoFrame.classList.remove('hidden-photo');
+});
+
+const achievementDetails = window.portfolioTemplateState?.achievementDetails || {
   'fall-list': {
     label: 'academic star',
     title: "Chancellor's List",
@@ -323,7 +559,7 @@ achievementStars.forEach(function(star) {
   star.addEventListener('mouseenter', showAchievement);
 });
 
-const goalDetails = {
+const goalDetails = window.portfolioTemplateState?.goalDetails || {
   software: {
     label: 'currently dreaming toward',
     title: 'Become a Software Engineer',
@@ -361,5 +597,96 @@ goalTasks.forEach(function(task) {
     goalNote.querySelector('.goal-note-label').textContent = selectedGoal.label;
     goalNote.querySelector('h3').textContent = selectedGoal.title;
     goalNote.querySelector('p:last-child').textContent = selectedGoal.text;
+  });
+});
+
+const aiWidget = document.querySelector('.ai-widget');
+const aiButton = document.querySelector('.ai-button');
+const aiClose = document.querySelector('.ai-close');
+const aiForm = document.querySelector('.ai-form');
+const aiInput = document.querySelector('.ai-input');
+const aiMessages = document.querySelector('.ai-messages');
+const aiSuggestionButtons = document.querySelectorAll('.ai-suggestions button');
+
+function addAiMessage(text, sender) {
+  const message = document.createElement('div');
+  message.className = 'ai-message ' + sender + '-message';
+  message.textContent = text;
+  aiMessages.appendChild(message);
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+}
+
+function listTitles(items) {
+  return items.map(function(item) {
+    return item.title;
+  }).join(', ');
+}
+
+function getPortfolioAnswer(question) {
+  const lowerQuestion = question.toLowerCase();
+  const data = typeof portfolioData !== 'undefined' ? portfolioData : null;
+
+  if (!data) {
+    return 'I can answer once the portfolio data file is loaded.';
+  }
+
+  if (lowerQuestion.includes('project')) {
+    return data.owner.firstName + "'s projects include " + listTitles(data.projects) + '.';
+  }
+
+  if (lowerQuestion.includes('achievement') || lowerQuestion.includes('star') || lowerQuestion.includes('resident') || lowerQuestion.includes('ambassador')) {
+    return 'Achievement highlights: ' + listTitles(data.achievements) + '.';
+  }
+
+  if (lowerQuestion.includes('hobby') || lowerQuestion.includes('dance') || lowerQuestion.includes('kathak')) {
+    return 'Outside of coding, ' + data.owner.firstName + ' enjoys ' + listTitles(data.hobbies) + '. Kathak is part of her dancing and creative identity.';
+  }
+
+  if (lowerQuestion.includes('goal') || lowerQuestion.includes('future')) {
+    return 'Her goals include ' + listTitles(data.goals) + '.';
+  }
+
+  if (lowerQuestion.includes('research') || lowerQuestion.includes('article')) {
+    return 'Research and writing highlights include ' + listTitles(data.research) + '.';
+  }
+
+  if (lowerQuestion.includes('contact') || lowerQuestion.includes('email')) {
+    return 'You can contact ' + data.owner.firstName + ' at ' + data.contact.email + ', or use the letter form in the contact card.';
+  }
+
+  return 'Try asking about projects, achievements, hobbies, goals, research, or contact info.';
+}
+
+function askPortfolioGuide(question) {
+  const cleanQuestion = question.trim();
+
+  if (!cleanQuestion) {
+    return;
+  }
+
+  addAiMessage(cleanQuestion, 'user');
+
+  setTimeout(function() {
+    addAiMessage(getPortfolioAnswer(cleanQuestion), 'bot');
+  }, 260);
+}
+
+aiButton.addEventListener('click', function() {
+  aiWidget.classList.toggle('open');
+});
+
+aiClose.addEventListener('click', function() {
+  aiWidget.classList.remove('open');
+});
+
+aiForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  askPortfolioGuide(aiInput.value);
+  aiInput.value = '';
+});
+
+aiSuggestionButtons.forEach(function(button) {
+  button.addEventListener('click', function() {
+    askPortfolioGuide(button.dataset.question);
   });
 });
