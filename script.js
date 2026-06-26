@@ -286,6 +286,7 @@ letterForm.addEventListener('submit', function(event) {
 
 const mainTitle = document.querySelector('#main-title');
 const openBookButton = document.querySelector('.open-book-button');
+const backToCoverButton = document.querySelector('.back-to-cover');
 
 function openCurtain() {
   document.body.classList.add('open-curtain');
@@ -294,6 +295,23 @@ function openCurtain() {
 
 mainTitle.addEventListener('click', openCurtain);
 openBookButton.addEventListener('click', openCurtain);
+
+backToCoverButton.addEventListener('click', function() {
+  const allSections = document.querySelectorAll('.scrapbook-section');
+
+  allSections.forEach(function(scrapbookSection) {
+    scrapbookSection.classList.remove('active-section');
+  });
+
+  document.body.classList.remove('open-curtain', 'paper-pulled');
+  paperHasPulled = false;
+  setActiveDot('');
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
 
 let paperHasPulled = false;
 
@@ -622,6 +640,12 @@ function listTitles(items) {
   }).join(', ');
 }
 
+function listDetailedItems(items) {
+  return items.map(function(item) {
+    return item.title + ': ' + item.text;
+  }).join(' ');
+}
+
 function getPortfolioAnswer(question) {
   const lowerQuestion = question.toLowerCase();
   const data = typeof portfolioData !== 'undefined' ? portfolioData : null;
@@ -631,19 +655,19 @@ function getPortfolioAnswer(question) {
   }
 
   if (lowerQuestion.includes('project')) {
-    return data.owner.firstName + "'s projects include " + listTitles(data.projects) + '.';
+    return data.owner.firstName + "'s projects include " + listTitles(data.projects) + '. Ask about one by name if you want a short explanation.';
   }
 
   if (lowerQuestion.includes('achievement') || lowerQuestion.includes('star') || lowerQuestion.includes('resident') || lowerQuestion.includes('ambassador')) {
-    return 'Achievement highlights: ' + listTitles(data.achievements) + '.';
+    return 'Achievement highlights: ' + listTitles(data.achievements) + '. The constellation includes academic, leadership, campus, growth, and creative stars.';
   }
 
-  if (lowerQuestion.includes('hobby') || lowerQuestion.includes('dance') || lowerQuestion.includes('kathak')) {
-    return 'Outside of coding, ' + data.owner.firstName + ' enjoys ' + listTitles(data.hobbies) + '. Kathak is part of her dancing and creative identity.';
+  if (lowerQuestion.includes('hobby') || lowerQuestion.includes('hobbies') || lowerQuestion.includes('dance') || lowerQuestion.includes('dancing') || lowerQuestion.includes('kathak')) {
+    return 'Outside of coding, ' + data.owner.firstName + ' enjoys ' + listTitles(data.hobbies) + '. ' + listDetailedItems(data.hobbies);
   }
 
   if (lowerQuestion.includes('goal') || lowerQuestion.includes('future')) {
-    return 'Her goals include ' + listTitles(data.goals) + '.';
+    return 'Her goals include ' + listTitles(data.goals) + '. ' + listDetailedItems(data.goals);
   }
 
   if (lowerQuestion.includes('research') || lowerQuestion.includes('article')) {

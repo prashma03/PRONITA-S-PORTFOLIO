@@ -291,6 +291,30 @@ h1 {
     z-index: 12;
 }
 
+.ai-widget::before {
+    content: "Ask AI";
+    position: absolute;
+    right: 66px;
+    bottom: 13px;
+    padding: 7px 12px;
+    border: 1px solid rgba(205, 189, 255, 0.42);
+    border-radius: 999px;
+    background-color: rgba(16, 11, 31, 0.86);
+    color: #f7d7ff;
+    font-size: 0.84rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(8px);
+    box-shadow: 0px 0px 18px rgba(188, 166, 255, 0.22);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.ai-widget:hover::before {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 .ai-button {
     width: 54px;
     height: 54px;
@@ -704,6 +728,38 @@ body.open-curtain .curtain-right {
     z-index: 1;
     overflow: hidden;
     transition: background-color 0.4s ease;
+}
+
+.back-to-cover {
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    z-index: 5;
+    height: 44px;
+    padding: 0 18px;
+    border: 1px solid #cdbdff;
+    border-radius: 999px;
+    background-color: rgba(16, 11, 31, 0.58);
+    color: #f7d7ff;
+    font-family: "Edu NSW ACT Cursive", cursive;
+    font-size: 1rem;
+    box-shadow:
+        0px 10px 22px rgba(0, 0, 0, 0.22),
+        0px 0px 20px rgba(188, 166, 255, 0.18);
+    cursor: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+
+body.open-curtain .back-to-cover {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.back-to-cover:hover {
+    transform: translateY(-3px);
+    background-color: rgba(255, 212, 221, 0.12);
 }
 
 .polaroid-page::before {
