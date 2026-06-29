@@ -2096,3 +2096,156 @@ body.dark-mode .goal-note p:last-child {
         margin: 0 auto;
     }
 }
+@media (max-width: 760px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 16vw, 4.8rem);
+    line-height: 1.05;
+  }
+
+  #main-title {
+    width: calc(100% - 30px);
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    text-align: center;
+  }
+
+  .intro-label,
+  .role-line {
+    width: calc(100% - 36px);
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .open-book-button {
+    width: min(250px, calc(100% - 44px));
+  }
+
+  .toggle {
+    top: 16px;
+    right: 16px;
+    transform: scale(0.9);
+    transform-origin: top right;
+  }
+
+  .contact-widget {
+    top: 16px;
+    right: 82px;
+  }
+
+  .contact-card {
+    width: min(320px, calc(100vw - 24px));
+    max-height: calc(100svh - 90px);
+    overflow-y: auto;
+  }
+
+  .polaroid-page {
+    min-height: 100svh;
+    padding: 78px 18px 48px;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 26px;
+  }
+
+  .polaroid {
+    width: min(280px, calc(100vw - 58px));
+    transform: rotate(-2deg);
+  }
+
+  .polaroid-img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+  }
+
+  .intro-text {
+    max-width: 100%;
+    text-align: center;
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  .scrapbook-menu,
+  .scrapbook-section {
+    min-height: 100svh;
+    padding: 86px 18px 44px;
+  }
+
+  .scrapbook-menu h2,
+  .scrapbook-section h2 {
+    font-size: clamp(2.3rem, 13vw, 3.4rem);
+    text-align: center;
+  }
+
+  .menu-boxes,
+  .scrapbook-cards,
+  .goals-planner,
+  .hobby-grid,
+  .hobby-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-boxes {
+    max-width: 330px;
+    margin: 0 auto;
+  }
+
+  .menu-boxes button {
+    min-height: 74px;
+    font-size: 1.2rem;
+  }
+
+  .scrapbook-card,
+  .goal-note,
+  .goals-list,
+  .hobby-detail {
+    padding: 22px;
+  }
+
+  .constellation-title {
+    width: calc(100% - 36px);
+  }
+
+  .constellation-title h3 {
+    font-size: clamp(2.4rem, 13vw, 3.5rem);
+  }
+
+  .achievement-detail {
+    width: min(285px, calc(100vw - 42px));
+    left: 50% !important;
+    top: 75% !important;
+  }
+
+  .ai-widget {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .ai-panel {
+    width: calc(100vw - 28px);
+    max-height: calc(100svh - 112px);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  :root {
+    cursor: auto;
+  }
+
+  .cursor-dot,
+  .cursor-ring,
+  .sparkly-trail {
+    display: none;
+  }
+
+  button,
+  a {
+    cursor: pointer;
+  }
+}
