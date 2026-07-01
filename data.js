@@ -75,6 +75,16 @@ const portfolioData = {
       glow: "rgba(143, 211, 255, 0.58)"
     },
     {
+      id: "calculus-award",
+      label: "math star",
+      title: "Calculus Award",
+      text: "A meaningful recognition of the subject I genuinely enjoy, where logic, precision, and problem solving come together in a way that feels natural to me.",
+      x: "72%",
+      y: "62%",
+      color: "#f5b544",
+      glow: "rgba(245, 181, 68, 0.58)"
+    },
+    {
       id: "growth",
       label: "growth star",
       title: "Academic Growth",
