@@ -467,12 +467,16 @@ h1 {
     position:absolute;
     transition: left 0.3s ease;
 }
+html {
+    background-color: #100b1f;
+}
+
 body.dark-mode {
   background-color: #120817;
   color: white;
 }
 body {
-    background-color: white;
+    background-color: #100b1f;
     color:#120817;
     margin: 0;
     overflow-x: hidden;
@@ -481,6 +485,14 @@ body {
     --star-y: 0px;
     font-family: "DM Sans", sans-serif;
 }
+body.open-curtain,
+body.paper-pulled {
+    background:
+        radial-gradient(circle at 70% 42%, rgba(242, 114, 142, 0.18), transparent 28%),
+        radial-gradient(circle at 28% 35%, rgba(188, 166, 255, 0.18), transparent 24%),
+        #100b1f;
+}
+
 body.dark-mode .toggle-knob {
     left:42px;
 }
@@ -1119,6 +1131,42 @@ body.dark-mode .intro-text {
         0px 0px 28px rgba(188, 166, 255, 0.35);
 }
 
+.page-turn-controls {
+    position: absolute;
+    left: 50%;
+    bottom: 26px;
+    z-index: 8;
+    display: flex;
+    gap: 12px;
+    transform: translateX(-50%);
+}
+
+.page-turn-button {
+    min-width: 132px;
+    height: 42px;
+    padding: 0 16px;
+    border: 1px solid rgba(205, 189, 255, 0.78);
+    border-radius: 999px;
+    background-color: rgba(16, 11, 31, 0.66);
+    color: #f7d7ff;
+    font-family: "Edu NSW ACT Cursive", cursive;
+    font-size: 0.98rem;
+    box-shadow:
+        0px 10px 22px rgba(0, 0, 0, 0.22),
+        0px 0px 20px rgba(188, 166, 255, 0.18);
+    cursor: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.page-turn-button:hover {
+    transform: translateY(-3px);
+    background-color: rgba(255, 212, 221, 0.13);
+    box-shadow:
+        0px 16px 30px rgba(0, 0, 0, 0.28),
+        0px 0px 28px rgba(188, 166, 255, 0.35);
+}
+
+body.open-curtain .scrapbook-menu,
 body.paper-pulled .scrapbook-menu {
     transform: translateY(0) scale(1);
     opacity: 1;
@@ -1287,6 +1335,205 @@ body.paper-pulled .scrapbook-menu {
 .scrapbook-link:hover {
     text-decoration: underline;
 }
+
+.featured-case-study,
+.skills-board {
+    width: min(1040px, 100%);
+    margin: 0 auto 32px;
+}
+
+.featured-case-study {
+    padding: 32px;
+    border: 1px solid rgba(205, 189, 255, 0.74);
+    border-radius: 8px;
+    background:
+        linear-gradient(rgba(188, 166, 255, 0.12) 1px, transparent 1px),
+        radial-gradient(circle at 80% 18%, rgba(242, 114, 142, 0.16), transparent 28%),
+        rgba(255, 247, 250, 0.96);
+    background-size: 100% 34px, 100% 100%, 100% 100%;
+    color: #120817;
+    box-shadow:
+        0px 16px 36px rgba(0, 0, 0, 0.28),
+        0px 0px 28px rgba(188, 166, 255, 0.22);
+    position: relative;
+}
+
+.featured-case-study::before {
+    content: "";
+    width: 88px;
+    height: 22px;
+    background-color: rgba(255, 212, 221, 0.88);
+    position: absolute;
+    top: -12px;
+    left: 34px;
+    transform: rotate(-3deg);
+    box-shadow: 0px 5px 12px rgba(242, 114, 142, 0.16);
+}
+
+.case-label,
+.skill-label {
+    margin: 0 0 10px;
+    color: #8f7ad2;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.featured-case-study h3,
+.skill-note h3 {
+    margin: 0 0 14px;
+    color: #f2728e;
+    font-family: "Edu NSW ACT Cursive", cursive;
+}
+
+.featured-case-study h3 {
+    font-size: 2.35rem;
+}
+
+.case-summary {
+    max-width: 760px;
+    margin: 0 0 24px;
+    color: #2d2338;
+    font-size: 1.06rem;
+    line-height: 1.65;
+}
+
+.case-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.case-grid div,
+.skill-note {
+    border: 1px solid rgba(205, 189, 255, 0.42);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.54);
+}
+
+.case-grid div {
+    padding: 18px;
+}
+
+.case-grid span {
+    display: block;
+    margin-bottom: 8px;
+    color: #f2728e;
+    font-weight: 700;
+}
+
+.case-grid p {
+    margin: 0;
+    color: #382d45;
+    line-height: 1.55;
+}
+
+.case-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.case-highlights li {
+    padding-left: 18px;
+    color: #2d2338;
+    line-height: 1.45;
+    position: relative;
+}
+
+.case-highlights li::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #f2728e;
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    box-shadow: 0px 0px 10px rgba(242, 114, 142, 0.4);
+}
+
+.case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+}
+
+.case-tags span,
+.skill-list li {
+    border: 1px solid rgba(242, 114, 142, 0.26);
+    border-radius: 999px;
+    background-color: rgba(255, 212, 221, 0.34);
+    color: #5a315f;
+}
+
+.case-tags span {
+    padding: 7px 11px;
+    font-size: 0.84rem;
+}
+
+.skills-board {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.4fr);
+    gap: 24px;
+}
+
+.skill-note {
+    padding: 24px;
+    color: #120817;
+    background:
+        radial-gradient(circle at 78% 16%, rgba(242, 114, 142, 0.13), transparent 30%),
+        rgba(255, 247, 250, 0.95);
+    box-shadow:
+        0px 12px 28px rgba(0, 0, 0, 0.22),
+        0px 0px 22px rgba(188, 166, 255, 0.16);
+}
+
+.skill-summary {
+    min-height: 100%;
+}
+
+.skill-note h3 {
+    font-size: 1.8rem;
+    line-height: 1.15;
+}
+
+.skill-note p:last-child {
+    margin: 0;
+    color: #2d2338;
+    line-height: 1.7;
+}
+
+.skills-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.skill-list li {
+    padding: 8px 11px;
+    font-size: 0.88rem;
+    line-height: 1.25;
+}
+
+.resume-link[hidden] {
+    display: none;
+}
+
 
 .goals-planner {
     width: min(980px, 100%);
@@ -1530,8 +1777,8 @@ body.paper-pulled .scrapbook-menu {
 .constellation-title {
     position: absolute;
     left: 50%;
-    top: 51%;
-    width: min(760px, 90vw);
+    top: 49%;
+    width: min(660px, 88vw);
     transform: translate(-50%, -50%);
     text-align: center;
     z-index: 5;
@@ -1549,8 +1796,8 @@ body.paper-pulled .scrapbook-menu {
 .constellation-title h3 {
     margin: 0;
     font-family: "Playfair Display", serif;
-    font-size: clamp(2.8rem, 6vw, 5.5rem);
-    line-height: 0.92;
+    font-size: clamp(2.25rem, 4.8vw, 4.45rem);
+    line-height: 0.98;
     color: #fff7df;
     text-shadow:
         0px 0px 18px rgba(247, 215, 255, 0.3),
@@ -1624,8 +1871,8 @@ body.paper-pulled .scrapbook-menu {
     border-radius: 50%;
     background-color: var(--color);
     box-shadow:
-        0px 0px 18px var(--glow),
-        0px 0px 48px var(--glow);
+        0px 0px 24px var(--glow),
+        0px 0px 70px var(--glow);
     transform: translate(-50%, -50%);
     z-index: 4;
     animation: stars-twinkle 2.5s ease-in-out infinite alternate;
@@ -1635,8 +1882,8 @@ body.paper-pulled .scrapbook-menu {
     position: absolute;
     left: var(--x);
     top: var(--y);
-    width: 44px;
-    height: 44px;
+    width: 58px;
+    height: 58px;
     padding: 0;
     border: none;
     border-radius: 50%;
@@ -1649,27 +1896,27 @@ body.paper-pulled .scrapbook-menu {
 .achievement-star span {
     position: relative;
     display: block;
-    width: 17px;
-    height: 17px;
-    margin: 13.5px;
+    width: 22px;
+    height: 22px;
+    margin: 18px;
     border-radius: 50%;
     background:
         radial-gradient(circle, #ffffff 0 12%, var(--color) 18% 100%);
     box-shadow:
-        0px 0px 12px rgba(255, 255, 255, 0.9),
-        0px 0px 28px var(--glow),
-        0px 0px 70px var(--glow);
+        0px 0px 16px rgba(255, 255, 255, 0.95),
+        0px 0px 42px var(--glow),
+        0px 0px 110px var(--glow);
     transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
-    animation: stars-twinkle 2.4s ease-in-out infinite alternate;
+    animation: star-invite 1.8s ease-in-out infinite alternate;
 }
 
 .achievement-star span::before {
     content: "";
     position: absolute;
-    inset: -26px;
+    inset: -34px;
     border-radius: 50%;
-    background: radial-gradient(circle, var(--glow), transparent 64%);
-    opacity: 0.8;
+    background: radial-gradient(circle, var(--glow), rgba(255, 255, 255, 0.12) 34%, transparent 68%);
+    opacity: 0.95;
     z-index: -1;
 }
 
@@ -1679,11 +1926,11 @@ body.paper-pulled .scrapbook-menu {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 42px;
+    width: 54px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(247, 215, 255, 0.78), transparent);
+    background: linear-gradient(90deg, transparent, rgba(247, 215, 255, 0.92), transparent);
     transform: translate(-50%, -50%);
-    opacity: 0.46;
+    opacity: 0.7;
     transition: opacity 0.25s ease;
 }
 
@@ -1693,11 +1940,11 @@ body.paper-pulled .scrapbook-menu {
 
 .achievement-star:hover span,
 .achievement-star.active-achievement span {
-    transform: scale(2.2);
+    transform: scale(2.05);
     box-shadow:
-        0px 0px 16px rgba(255, 255, 255, 0.95),
-        0px 0px 42px var(--glow),
-        0px 0px 100px var(--glow);
+        0px 0px 20px rgba(255, 255, 255, 1),
+        0px 0px 58px var(--glow),
+        0px 0px 138px var(--glow);
 }
 
 .achievement-star:hover::before,
@@ -1708,9 +1955,9 @@ body.paper-pulled .scrapbook-menu {
 }
 
 .small-star span {
-    width: 14px;
-    height: 14px;
-    margin: 15px;
+    width: 18px;
+    height: 18px;
+    margin: 20px;
 }
 
 .achievement-detail {
@@ -1981,6 +2228,35 @@ body.dark-mode .scrapbook-section {
         calc(90px - var(--star-x)) calc(110px - var(--star-y));
 }
 
+
+body.dark-mode .featured-case-study,
+body.dark-mode .skill-note {
+    background:
+        radial-gradient(circle at 76% 18%, rgba(242, 114, 142, 0.18), transparent 30%),
+        rgba(16, 11, 31, 0.96);
+    color: #fff7df;
+    border-color: rgba(205, 189, 255, 0.38);
+}
+
+body.dark-mode .case-summary,
+body.dark-mode .case-grid p,
+body.dark-mode .case-highlights li,
+body.dark-mode .skill-note p:last-child {
+    color: rgba(255, 247, 223, 0.78);
+}
+
+body.dark-mode .case-grid div {
+    background-color: rgba(255, 247, 250, 0.06);
+    border-color: rgba(205, 189, 255, 0.28);
+}
+
+body.dark-mode .case-tags span,
+body.dark-mode .skill-list li {
+    background-color: rgba(205, 189, 255, 0.12);
+    border-color: rgba(205, 189, 255, 0.28);
+    color: #f7d7ff;
+}
+
 body.dark-mode .scrapbook-card {
     background:
         radial-gradient(circle at 70% 42%, rgba(242, 114, 142, 0.18), transparent 28%),
@@ -2025,6 +2301,18 @@ body.dark-mode .goal-check {
 body.dark-mode .goal-task small,
 body.dark-mode .goal-note p:last-child {
     color: rgba(255, 247, 223, 0.78);
+}
+
+@keyframes star-invite {
+    from {
+        opacity: 0.76;
+        filter: drop-shadow(0px 0px 8px rgba(255, 247, 223, 0.72));
+    }
+
+    to {
+        opacity: 1;
+        filter: drop-shadow(0px 0px 18px rgba(255, 247, 223, 0.98));
+    }
 }
 
 @keyframes stars-twinkle {
@@ -2079,7 +2367,7 @@ body.dark-mode .goal-note p:last-child {
     }
 
     .constellation-title h3 {
-        font-size: 3rem;
+        font-size: 2.45rem;
     }
 
     .achievement-detail {
@@ -2140,6 +2428,7 @@ body.dark-mode .goal-note p:last-child {
   }
 
   .contact-card {
+    right: -82px;
     width: min(320px, calc(100vw - 24px));
     max-height: calc(100svh - 90px);
     overflow-y: auto;
@@ -2174,7 +2463,7 @@ body.dark-mode .goal-note p:last-child {
   .scrapbook-menu,
   .scrapbook-section {
     min-height: 100svh;
-    padding: 86px 18px 44px;
+    padding: 86px 18px 104px;
   }
 
   .scrapbook-menu h2,
@@ -2187,7 +2476,11 @@ body.dark-mode .goal-note p:last-child {
   .scrapbook-cards,
   .goals-planner,
   .hobby-grid,
-  .hobby-detail {
+  .hobby-detail,
+  .skills-board,
+  .skills-columns,
+  .case-grid,
+  .case-highlights {
     grid-template-columns: 1fr;
   }
 
@@ -2201,7 +2494,23 @@ body.dark-mode .goal-note p:last-child {
     font-size: 1.2rem;
   }
 
+  .page-turn-controls {
+    width: calc(100% - 36px);
+    justify-content: center;
+    bottom: 22px;
+  }
+
+  .page-turn-button {
+    min-width: 0;
+    flex: 1;
+    max-width: 170px;
+    padding: 0 10px;
+    font-size: 0.92rem;
+  }
+
   .scrapbook-card,
+  .featured-case-study,
+  .skill-note,
   .goal-note,
   .goals-list,
   .hobby-detail {
@@ -2213,7 +2522,7 @@ body.dark-mode .goal-note p:last-child {
   }
 
   .constellation-title h3 {
-    font-size: clamp(2.4rem, 13vw, 3.5rem);
+    font-size: clamp(2.1rem, 10vw, 3rem);
   }
 
   .achievement-detail {
@@ -2228,6 +2537,7 @@ body.dark-mode .goal-note p:last-child {
   }
 
   .ai-panel {
+    box-sizing: border-box;
     width: calc(100vw - 28px);
     max-height: calc(100svh - 112px);
   }

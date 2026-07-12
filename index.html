@@ -63,6 +63,7 @@
         <button class="side-dot" data-jump="polaroid-page" data-label="About"></button>
         <button class="side-dot" data-jump="scrapbook-menu" data-label="Pages"></button>
         <button class="side-dot" data-jump="projects" data-label="Projects"></button>
+        <button class="side-dot" data-jump="skills" data-label="Skills"></button>
         <button class="side-dot" data-jump="achievements" data-label="Achievements"></button>
         <button class="side-dot" data-jump="goals" data-label="Goals"></button>
         <button class="side-dot" data-jump="hobbies" data-label="Hobbies"></button>
@@ -75,17 +76,39 @@
         <h2>open a scrapbook page</h2>
 
         <div class="menu-boxes">
-            <button data-section="projects">Projects</button>
-            <button data-section="achievements">Achievements</button>
-            <button data-section="goals">Goals</button>
-            <button data-section="hobbies">Hobbies</button>
-            <button data-section="research">Research</button>
-            <button data-section="hackathons">Hackathons</button>
+            <button type="button" data-section="projects">Projects</button>
+            <button type="button" data-section="skills">Skills</button>
+            <button type="button" data-section="achievements">Achievements</button>
+            <button type="button" data-section="goals">Goals</button>
+            <button type="button" data-section="hobbies">Hobbies</button>
+            <button type="button" data-section="research">Research</button>
+            <button type="button" data-section="hackathons">Hackathons</button>
         </div>
     </section>
 
     <section class="scrapbook-section" id="projects">
         <h2>projects</h2>
+
+        <article class="featured-case-study">
+            <p class="case-label">featured case study</p>
+            <h3>Materna</h3>
+            <p class="case-summary">A maternal-care hackathon project shaped around accessible support, thoughtful product design, and practical technology for families.</p>
+            <div class="case-grid">
+                <div>
+                    <span>Problem</span>
+                    <p>Maternal care can feel fragmented, stressful, and hard to navigate when people need clear support quickly.</p>
+                </div>
+                <div>
+                    <span>My Role</span>
+                    <p>Worked across product thinking, front-end experience, and user-centered feature planning.</p>
+                </div>
+                <div>
+                    <span>Engineering Focus</span>
+                    <p>Clear flows, accessible interface decisions, and a foundation that can grow into a complete support platform.</p>
+                </div>
+            </div>
+            <ul class="case-highlights"></ul>
+        </article>
 
         <div class="scrapbook-cards">
             <article class="scrapbook-card">
@@ -102,6 +125,40 @@
                 <h3>Bhagwat-Gita-Kids-App</h3>
                 <p>An interactive kids app designed to teach stories and lessons from the Bhagwat Gita in a fun way.</p>
             </article>
+        </div>
+    </section>
+
+    <section class="scrapbook-section" id="skills">
+        <h2>skills</h2>
+
+        <div class="skills-board">
+            <article class="skill-note skill-summary">
+                <p class="skill-label">engineering snapshot</p>
+                <h3>Built for learning fast and building carefully</h3>
+                <p>My strongest foundation is the mix of computer science, mathematics, product curiosity, and creative communication. I am growing toward software engineering through full-stack projects, AI exploration, research, and consistent practice with problem solving.</p>
+            </article>
+
+            <div class="skills-columns">
+                <article class="skill-note">
+                    <p class="skill-label">languages</p>
+                    <ul class="skill-list" data-skill-group="languages"></ul>
+                </article>
+
+                <article class="skill-note">
+                    <p class="skill-label">web and apps</p>
+                    <ul class="skill-list" data-skill-group="web"></ul>
+                </article>
+
+                <article class="skill-note">
+                    <p class="skill-label">cs foundations</p>
+                    <ul class="skill-list" data-skill-group="foundations"></ul>
+                </article>
+
+                <article class="skill-note">
+                    <p class="skill-label">tools and interests</p>
+                    <ul class="skill-list" data-skill-group="tools"></ul>
+                </article>
+            </div>
         </div>
     </section>
 
@@ -297,8 +354,9 @@
             </div>
 
             <div class="contact-links">
-                <a href="https://www.linkedin.com/in/pronitaghimire3553/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                <a href="https://github.com/prashma03" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="linkedin-link" href="https://www.linkedin.com/in/pronitaghimire3553/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a class="github-link" href="https://github.com/prashma03" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="resume-link" href="Pronita-Ghimire-Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
             </div>
 
             <form class="letter-note letter-form" method="POST">
@@ -331,8 +389,9 @@
 
             <div class="ai-suggestions">
                 <button type="button" data-question="projects">Projects</button>
-                <button type="button" data-question="achievements">Achievements</button>
-                <button type="button" data-question="hobbies">Hobbies</button>
+                <button type="button" data-question="skills">Skills</button>
+                <button type="button" data-question="why hire Pronita">Why hire?</button>
+                <button type="button" data-question="strongest project">Strongest project</button>
             </div>
 
             <form class="ai-form">

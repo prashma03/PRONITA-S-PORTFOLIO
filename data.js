@@ -15,7 +15,27 @@ const portfolioData = {
     email: "PG051332@uamont.edu",
     linkedin: "https://www.linkedin.com/in/pronitaghimire3553/",
     github: "https://github.com/prashma03",
+    resume: "Pronita-Ghimire-Resume.pdf",
     formEndpoint: "https://formspree.io/f/mgojkkrg"
+  },
+
+  featuredProject: {
+    title: "Materna",
+    label: "featured case study",
+    summary: "A maternal-care hackathon project shaped around accessible support, thoughtful product design, and practical technology for families.",
+    problem: "Maternal care can feel fragmented, stressful, and hard to navigate when people need clear support quickly.",
+    role: "Worked across product thinking, front-end experience, and user-centered feature planning.",
+    engineering: "Clear flows, accessible interface decisions, and a foundation that can grow into a complete support platform.",
+    stack: ["React Native", "JavaScript", "product design", "accessibility thinking"],
+    highlights: ["Designed for a real human need", "Balanced empathy with practical engineering", "Built under hackathon constraints"]
+  },
+
+  skills: {
+    summary: "My strongest foundation is the mix of computer science, mathematics, product curiosity, and creative communication. I am growing toward software engineering through full-stack projects, AI exploration, research, and consistent practice with problem solving.",
+    languages: ["JavaScript", "Python", "HTML", "CSS", "Java", "C++"],
+    web: ["Responsive UI", "front-end development", "React / React Native", "API thinking", "user-centered interfaces"],
+    foundations: ["Data structures and algorithms", "mathematics", "problem solving", "debugging", "research thinking"],
+    tools: ["GitHub", "AI-assisted development", "cybersecurity research", "technical writing", "collaborative projects"]
   },
 
   projects: [

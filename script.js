@@ -90,6 +90,80 @@ function renderCards(sectionId, items) {
   });
 }
 
+function renderFeaturedProject(project) {
+  if (!project) {
+    return;
+  }
+
+  const caseStudy = document.querySelector('.featured-case-study');
+  if (!caseStudy) {
+    return;
+  }
+
+  caseStudy.querySelector('.case-label').textContent = project.label;
+  caseStudy.querySelector('h3').textContent = project.title;
+  caseStudy.querySelector('.case-summary').textContent = project.summary;
+
+  const fields = caseStudy.querySelectorAll('.case-grid p');
+  fields[0].textContent = project.problem;
+  fields[1].textContent = project.role;
+  fields[2].textContent = project.engineering;
+
+  const highlights = caseStudy.querySelector('.case-highlights');
+  if (highlights) {
+    highlights.innerHTML = '';
+    project.highlights.forEach(function(highlight) {
+      const item = document.createElement('li');
+      item.textContent = highlight;
+      highlights.appendChild(item);
+    });
+  }
+
+  const meta = document.createElement('div');
+  meta.className = 'case-tags';
+  project.stack.forEach(function(item) {
+    const tag = document.createElement('span');
+    tag.textContent = item;
+    meta.appendChild(tag);
+  });
+
+  const existingTags = caseStudy.querySelector('.case-tags');
+  if (existingTags) {
+    existingTags.remove();
+  }
+
+  caseStudy.appendChild(meta);
+}
+
+function renderSkills(skills) {
+  if (!skills) {
+    return;
+  }
+
+  const summary = document.querySelector('.skill-summary p:last-child');
+  if (summary) {
+    summary.textContent = skills.summary;
+  }
+
+  Object.keys(skills).forEach(function(group) {
+    if (group === 'summary') {
+      return;
+    }
+
+    const list = document.querySelector('[data-skill-group="' + group + '"]');
+    if (!list) {
+      return;
+    }
+
+    list.innerHTML = '';
+    skills[group].forEach(function(skill) {
+      const item = document.createElement('li');
+      item.textContent = skill;
+      list.appendChild(item);
+    });
+  });
+}
+
 function renderPortfolioData() {
   if (typeof portfolioData === 'undefined') {
     return;
@@ -111,8 +185,16 @@ function renderPortfolioData() {
   document.querySelector('.contact-card > p:first-of-type').textContent = owner.fullName;
   document.querySelector('.contact-card > p:nth-of-type(2)').textContent = contact.subtitle;
   document.querySelector('.email-text').textContent = contact.email;
-  document.querySelector('.contact-links a:first-child').href = contact.linkedin;
-  document.querySelector('.contact-links a:last-child').href = contact.github;
+  document.querySelector('.linkedin-link').href = contact.linkedin;
+  document.querySelector('.github-link').href = contact.github;
+
+  const resumeLink = document.querySelector('.resume-link');
+  if (contact.resume) {
+    resumeLink.href = contact.resume;
+    resumeLink.hidden = false;
+  } else {
+    resumeLink.hidden = true;
+  }
 
   const letterForm = document.querySelector('.letter-form');
 
@@ -120,6 +202,8 @@ function renderPortfolioData() {
     letterForm.action = contact.formEndpoint;
   }
 
+  renderFeaturedProject(portfolioData.featuredProject);
+  renderSkills(portfolioData.skills);
   renderCards('projects', portfolioData.projects);
   renderCards('research', portfolioData.research);
   renderCards('hackathons', portfolioData.hackathons);
@@ -217,11 +301,34 @@ function renderPortfolioData() {
 
 renderPortfolioData();
 
+const scrapbookPageOrder = ['projects', 'skills', 'achievements', 'goals', 'hobbies', 'research', 'hackathons'];
+
 document.querySelectorAll('.scrapbook-section').forEach(function(section) {
   const backButton = document.createElement('button');
   backButton.className = 'section-back-button';
   backButton.type = 'button';
   backButton.textContent = 'Back to Pages';
+
+  const pageIndex = scrapbookPageOrder.indexOf(section.id);
+  const pageControls = document.createElement('nav');
+  pageControls.className = 'page-turn-controls';
+  pageControls.setAttribute('aria-label', 'Scrapbook page navigation');
+
+  const previousButton = document.createElement('button');
+  previousButton.className = 'page-turn-button previous-page';
+  previousButton.type = 'button';
+  previousButton.dataset.pageTarget = pageIndex > 0 ? scrapbookPageOrder[pageIndex - 1] : 'scrapbook-menu';
+  previousButton.textContent = pageIndex > 0 ? 'Previous Page' : 'Chapter Index';
+
+  const nextButton = document.createElement('button');
+  nextButton.className = 'page-turn-button next-page';
+  nextButton.type = 'button';
+  nextButton.dataset.pageTarget = pageIndex < scrapbookPageOrder.length - 1 ? scrapbookPageOrder[pageIndex + 1] : 'scrapbook-menu';
+  nextButton.textContent = pageIndex < scrapbookPageOrder.length - 1 ? 'Next Page' : 'Chapter Index';
+
+  pageControls.appendChild(previousButton);
+  pageControls.appendChild(nextButton);
+  section.prepend(pageControls);
   section.prepend(backButton);
 });
 
@@ -314,8 +421,72 @@ backToCoverButton.addEventListener('click', function() {
 });
 
 let paperHasPulled = false;
+let wheelPageTurnLocked = false;
+
+function shouldIgnorePageTurn(event) {
+  return event.target.closest('.ai-panel, .contact-card, .letter-form');
+}
+
+function turnPageFromScroll(direction) {
+  const activeSection = document.querySelector('.scrapbook-section.active-section');
+
+  if (!activeSection || wheelPageTurnLocked) {
+    return false;
+  }
+
+  const activeIndex = scrapbookPageOrder.indexOf(activeSection.id);
+
+  if (activeIndex === -1) {
+    return false;
+  }
+
+  wheelPageTurnLocked = true;
+
+  setTimeout(function() {
+    wheelPageTurnLocked = false;
+  }, 900);
+
+  if (direction === 'next') {
+    if (activeIndex < scrapbookPageOrder.length - 1) {
+      showScrapbookSection(scrapbookPageOrder[activeIndex + 1]);
+    } else {
+      showScrapbookMenu();
+    }
+
+    return true;
+  }
+
+  if (activeIndex > 0) {
+    showScrapbookSection(scrapbookPageOrder[activeIndex - 1]);
+  } else {
+    showScrapbookMenu();
+  }
+
+  return true;
+}
 
 window.addEventListener('wheel', function(event) {
+  if (paperHasPulled === true && !shouldIgnorePageTurn(event)) {
+    const activeSection = document.querySelector('.scrapbook-section.active-section');
+
+    if (activeSection) {
+      const sectionTop = activeSection.offsetTop;
+      const sectionBottom = sectionTop + activeSection.scrollHeight;
+      const atTop = window.scrollY <= sectionTop + 12;
+      const atBottom = window.scrollY + window.innerHeight >= sectionBottom - 12;
+
+      if (event.deltaY > 0 && atBottom && turnPageFromScroll('next')) {
+        event.preventDefault();
+        return;
+      }
+
+      if (event.deltaY < 0 && atTop && turnPageFromScroll('previous')) {
+        event.preventDefault();
+        return;
+      }
+    }
+  }
+
   if (event.deltaY < 0 && paperHasPulled === true && window.scrollY <= window.innerHeight + 80) {
     event.preventDefault();
 
@@ -344,10 +515,46 @@ const menuButtons = document.querySelectorAll('.menu-boxes button');
 const backToPolaroidButton = document.querySelector('.back-to-polaroid');
 const sideDots = document.querySelectorAll('.side-dot');
 const sectionBackButtons = document.querySelectorAll('.section-back-button');
+const pageTurnButtons = document.querySelectorAll('.page-turn-button');
 
 function setActiveDot(sectionId) {
   sideDots.forEach(function(dot) {
     dot.classList.toggle('active-dot', dot.dataset.jump === sectionId);
+  });
+}
+
+function clearActiveSections() {
+  document.querySelectorAll('.scrapbook-section').forEach(function(scrapbookSection) {
+    scrapbookSection.classList.remove('active-section');
+  });
+}
+
+function showScrapbookMenu() {
+  clearActiveSections();
+  document.body.classList.add('open-curtain', 'paper-pulled');
+  paperHasPulled = true;
+  setActiveDot('scrapbook-menu');
+
+  document.querySelector('#scrapbook-menu').scrollIntoView({
+    behavior: 'smooth'
+  });
+}
+
+function showScrapbookSection(sectionId) {
+  const section = document.querySelector('#' + sectionId);
+
+  if (!section) {
+    return;
+  }
+
+  clearActiveSections();
+  document.body.classList.add('open-curtain', 'paper-pulled');
+  paperHasPulled = true;
+  section.classList.add('active-section');
+  setActiveDot(sectionId);
+
+  section.scrollIntoView({
+    behavior: 'smooth'
   });
 }
 
@@ -373,39 +580,23 @@ backToPolaroidButton.addEventListener('click', function() {
 });
 
 sectionBackButtons.forEach(function(button) {
+  button.addEventListener('click', showScrapbookMenu);
+});
+
+pageTurnButtons.forEach(function(button) {
   button.addEventListener('click', function() {
-    const allSections = document.querySelectorAll('.scrapbook-section');
+    if (button.dataset.pageTarget === 'scrapbook-menu') {
+      showScrapbookMenu();
+      return;
+    }
 
-    allSections.forEach(function(scrapbookSection) {
-      scrapbookSection.classList.remove('active-section');
-    });
-
-    document.body.classList.add('open-curtain', 'paper-pulled');
-    paperHasPulled = true;
-    setActiveDot('scrapbook-menu');
-
-    document.querySelector('#scrapbook-menu').scrollIntoView({
-      behavior: 'smooth'
-    });
+    showScrapbookSection(button.dataset.pageTarget);
   });
 });
 
 menuButtons.forEach(function(button) {
   button.addEventListener('click', function() {
-    const sectionId = button.dataset.section;
-    const section = document.querySelector('#' + sectionId);
-    const allSections = document.querySelectorAll('.scrapbook-section');
-
-    allSections.forEach(function(scrapbookSection) {
-      scrapbookSection.classList.remove('active-section');
-    });
-
-    section.classList.add('active-section');
-    setActiveDot(sectionId);
-
-    section.scrollIntoView({
-      behavior: 'smooth'
-    });
+    showScrapbookSection(button.dataset.section);
   });
 });
 
@@ -435,18 +626,12 @@ sideDots.forEach(function(dot) {
       return;
     }
 
-    document.body.classList.add('paper-pulled');
-    paperHasPulled = true;
-
-    if (sectionId !== 'scrapbook-menu') {
-      document.querySelector('#' + sectionId).classList.add('active-section');
+    if (sectionId === 'scrapbook-menu') {
+      showScrapbookMenu();
+      return;
     }
 
-    document.querySelector('#' + sectionId).scrollIntoView({
-      behavior: 'smooth'
-    });
-
-    setActiveDot(sectionId);
+    showScrapbookSection(sectionId);
   });
 });
 
@@ -646,6 +831,14 @@ function listDetailedItems(items) {
   }).join(' ');
 }
 
+function listSkillItems(skills) {
+  return Object.keys(skills).filter(function(group) {
+    return group !== 'summary';
+  }).map(function(group) {
+    return group + ': ' + skills[group].join(', ');
+  }).join('. ');
+}
+
 function getPortfolioAnswer(question) {
   const lowerQuestion = question.toLowerCase();
   const data = typeof portfolioData !== 'undefined' ? portfolioData : null;
@@ -654,8 +847,24 @@ function getPortfolioAnswer(question) {
     return 'I can answer once the portfolio data file is loaded.';
   }
 
+  if (lowerQuestion.includes('hire') || lowerQuestion.includes('why pronita') || lowerQuestion.includes('recruiter')) {
+    return data.owner.firstName + ' combines computer science, mathematics, creative communication, leadership, and project-building energy. She is early-career, but she shows strong signals big teams care about: curiosity, consistency, empathy for users, and the discipline to keep learning hard technical skills.';
+  }
+
+  if (lowerQuestion.includes('skill') || lowerQuestion.includes('tech') || lowerQuestion.includes('technology') || lowerQuestion.includes('stack')) {
+    return 'Skill snapshot: ' + listSkillItems(data.skills) + '.';
+  }
+
+  if (lowerQuestion.includes('strongest') || lowerQuestion.includes('materna') || lowerQuestion.includes('case study')) {
+    return data.featuredProject.title + ' is the featured project. ' + data.featuredProject.summary + ' Engineering focus: ' + data.featuredProject.engineering + ' Stack and concepts: ' + data.featuredProject.stack.join(', ') + '.';
+  }
+
+  if (lowerQuestion.includes('resume')) {
+    return 'Use the Resume link in the contact card. Before submitting, make sure Pronita-Ghimire-Resume.pdf is in the same folder as this website.';
+  }
+
   if (lowerQuestion.includes('project')) {
-    return data.owner.firstName + "'s projects include " + listTitles(data.projects) + '. Ask about one by name if you want a short explanation.';
+    return data.owner.firstName + "'s projects include " + listTitles(data.projects) + '. The featured case study is ' + data.featuredProject.title + ', which shows product thinking, user empathy, and engineering growth.';
   }
 
   if (lowerQuestion.includes('achievement') || lowerQuestion.includes('star') || lowerQuestion.includes('resident') || lowerQuestion.includes('ambassador')) {
@@ -678,7 +887,7 @@ function getPortfolioAnswer(question) {
     return 'You can contact ' + data.owner.firstName + ' at ' + data.contact.email + ', or use the letter form in the contact card.';
   }
 
-  return 'Try asking about projects, achievements, hobbies, goals, research, or contact info.';
+  return 'Try asking about projects, skills, the featured case study, why Pronita would be a strong hire, achievements, goals, research, or contact info.';
 }
 
 function askPortfolioGuide(question) {

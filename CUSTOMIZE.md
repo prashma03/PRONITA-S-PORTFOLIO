@@ -11,7 +11,9 @@ data.js
 Open `data.js` and replace the example information with your own:
 
 - `owner`: name, title, intro, photo, and bio
-- `contact`: email, LinkedIn, and GitHub
+- `contact`: email, LinkedIn, GitHub, resume file, and form endpoint
+- `featuredProject`: the main case study recruiters should read first
+- `skills`: languages, web/app skills, CS foundations, tools, and interests
 - `projects`: project cards
 - `achievements`: glowing stars in the constellation
 - `goals`: future checklist items
@@ -76,6 +78,14 @@ formEndpoint: "https://formspree.io/f/yourformid"
 ```
 
 After that, letters from the contact card will be sent to your email.
+
+## Resume
+
+Put your resume PDF in the same folder as `index.html`, then update `contact.resume` in `data.js`. The current expected filename is:
+
+```text
+Pronita-Ghimire-Resume.pdf
+```
 
 ## Portfolio Guide Chat
 
