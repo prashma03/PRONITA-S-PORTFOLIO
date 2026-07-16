@@ -422,9 +422,34 @@ backToCoverButton.addEventListener('click', function() {
 
 let paperHasPulled = false;
 let wheelPageTurnLocked = false;
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartTime = 0;
 
 function shouldIgnorePageTurn(event) {
   return event.target.closest('.ai-panel, .contact-card, .letter-form');
+}
+
+function pullToChapterIndex() {
+  paperHasPulled = true;
+  document.body.classList.add('paper-pulled');
+  setActiveDot('scrapbook-menu');
+
+  window.scrollTo({
+    top: window.innerHeight,
+    behavior: 'smooth'
+  });
+}
+
+function isActiveSectionAtEdge(activeSection, edge) {
+  const sectionTop = activeSection.offsetTop;
+  const sectionBottom = sectionTop + activeSection.scrollHeight;
+
+  if (edge === 'top') {
+    return window.scrollY <= sectionTop + 16;
+  }
+
+  return window.scrollY + window.innerHeight >= sectionBottom - 16;
 }
 
 function turnPageFromScroll(direction) {
@@ -470,10 +495,8 @@ window.addEventListener('wheel', function(event) {
     const activeSection = document.querySelector('.scrapbook-section.active-section');
 
     if (activeSection) {
-      const sectionTop = activeSection.offsetTop;
-      const sectionBottom = sectionTop + activeSection.scrollHeight;
-      const atTop = window.scrollY <= sectionTop + 12;
-      const atBottom = window.scrollY + window.innerHeight >= sectionBottom - 12;
+      const atTop = isActiveSectionAtEdge(activeSection, 'top');
+      const atBottom = isActiveSectionAtEdge(activeSection, 'bottom');
 
       if (event.deltaY > 0 && atBottom && turnPageFromScroll('next')) {
         event.preventDefault();
@@ -500,16 +523,69 @@ window.addEventListener('wheel', function(event) {
 
   if (event.deltaY > 0 && document.body.classList.contains('open-curtain') && paperHasPulled === false) {
     event.preventDefault();
-    paperHasPulled = true;
-    document.body.classList.add('paper-pulled');
-    setActiveDot('scrapbook-menu');
-
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: 'smooth'
-    });
+    pullToChapterIndex();
   }
 }, { passive: false });
+
+document.addEventListener('touchstart', function(event) {
+  if (shouldIgnorePageTurn(event)) {
+    return;
+  }
+
+  const touch = event.changedTouches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+  touchStartTime = Date.now();
+}, { passive: true });
+
+document.addEventListener('touchend', function(event) {
+  if (shouldIgnorePageTurn(event) || touchStartTime === 0) {
+    return;
+  }
+
+  const touch = event.changedTouches[0];
+  const deltaX = touch.clientX - touchStartX;
+  const deltaY = touch.clientY - touchStartY;
+  const absX = Math.abs(deltaX);
+  const absY = Math.abs(deltaY);
+  const elapsed = Date.now() - touchStartTime;
+
+  touchStartTime = 0;
+
+  if (elapsed > 900 || absY < 64 || absY < absX * 1.25) {
+    return;
+  }
+
+  const swipedUp = deltaY < 0;
+  const swipedDown = deltaY > 0;
+
+  if (swipedUp && document.body.classList.contains('open-curtain') && paperHasPulled === false) {
+    pullToChapterIndex();
+    return;
+  }
+
+  if (paperHasPulled !== true) {
+    return;
+  }
+
+  const activeSection = document.querySelector('.scrapbook-section.active-section');
+
+  if (!activeSection) {
+    if (swipedUp) {
+      showScrapbookSection(scrapbookPageOrder[0]);
+    }
+
+    return;
+  }
+
+  if (swipedUp && isActiveSectionAtEdge(activeSection, 'bottom')) {
+    turnPageFromScroll('next');
+  }
+
+  if (swipedDown && isActiveSectionAtEdge(activeSection, 'top')) {
+    turnPageFromScroll('previous');
+  }
+}, { passive: true });
 
 const menuButtons = document.querySelectorAll('.menu-boxes button');
 const backToPolaroidButton = document.querySelector('.back-to-polaroid');

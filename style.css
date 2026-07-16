@@ -705,6 +705,12 @@ body.open-curtain .title-right {
     opacity: 0;
 }
 
+body.open-curtain #main-title {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
 body.open-curtain .intro-label,
 body.open-curtain .role-line,
 body.open-curtain .open-book-button {
