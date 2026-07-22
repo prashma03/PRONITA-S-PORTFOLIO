@@ -30,7 +30,7 @@ const portfolioData = {
     demoLinks: [
       {
         label: "Open demo with vitals",
-        url: "https://materna-h2dmp2djr-pronita-ghimires-projects.vercel.app"
+        url: "https://prashma03.github.io/Hackathon/"
       },
       {
         label: "Open demo without vitals",
