@@ -212,6 +212,16 @@ const portfolioData = {
       title: "Travel",
       short: "local people, places, stories",
       text: "I want to travel for fun, but also to know local people and their stories. I think places teach you things that classrooms and screens cannot always teach."
+    },
+    {
+      id: "volunteering",
+      symbol: "V",
+      title: "Volunteering",
+      short: "service, empathy, community",
+      text: "I volunteered for five months at a center for children with mental disabilities in Nepal. Spending time there taught me patience, empathy, and the importance of showing up with care, attention, and respect.",
+      image: "volunteering-nepal.jpg",
+      imageAlt: "Pronita volunteering with children at a center in Nepal",
+      caption: "Volunteering with children in Nepal"
     }
   ],
 

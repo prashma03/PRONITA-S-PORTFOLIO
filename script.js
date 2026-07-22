@@ -382,6 +382,7 @@ function renderPortfolioData() {
       title: hobby.title,
       text: hobby.text,
       image: hobby.image || '',
+      imageAlt: hobby.imageAlt || hobby.title,
       caption: hobby.caption || ''
     };
 
@@ -394,7 +395,7 @@ function renderPortfolioData() {
       document.querySelector('.hobby-copy h3').textContent = hobby.title;
       document.querySelector('.hobby-copy p:last-child').textContent = hobby.text;
       document.querySelector('.hobby-photo').src = hobby.image || '';
-      document.querySelector('.hobby-photo').alt = hobby.title;
+      document.querySelector('.hobby-photo').alt = hobby.imageAlt || hobby.title;
       document.querySelector('.hobby-photo-frame figcaption').textContent = hobby.caption || '';
     }
 
@@ -842,6 +843,13 @@ const hobbyDetails = window.portfolioTemplateState?.hobbyDetails || {
     text: 'I want to travel for fun, but also to know local people and their stories. I think places teach you things that classrooms and screens cannot always teach.',
     image: '',
     caption: ''
+  },
+  volunteering: {
+    title: 'Volunteering',
+    text: 'I volunteered for five months at a center for children with mental disabilities in Nepal. Spending time there taught me patience, empathy, and the importance of showing up with care, attention, and respect.',
+    image: 'volunteering-nepal.jpg',
+    imageAlt: 'Pronita volunteering with children at a center in Nepal',
+    caption: 'Volunteering with children in Nepal'
   }
 };
 
@@ -866,7 +874,7 @@ hobbyTiles.forEach(function(tile) {
     if (selectedHobby.image) {
       hobbyPhotoFrame.classList.add('hidden-photo');
       hobbyPhoto.src = selectedHobby.image;
-      hobbyPhoto.alt = 'Pronita dancing Kathak';
+      hobbyPhoto.alt = selectedHobby.imageAlt || selectedHobby.title;
       hobbyPhotoCaption.textContent = selectedHobby.caption;
 
       if (hobbyPhoto.complete && hobbyPhoto.naturalWidth > 0) {
