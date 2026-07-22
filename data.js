@@ -26,7 +26,7 @@ const portfolioData = {
     problem: "Maternal care can feel fragmented, stressful, and hard to navigate. Materna explores how thoughtful technology could help women find guidance sooner, reduce panic, and make support easier to reach.",
     role: "Worked across product thinking, front-end experience, and user-centered feature planning.",
     engineering: "Clear flows, accessible interface decisions, and a foundation that could grow into a practical support platform for women and families.",
-    link: "https://prashma03.github.io/Materna/",
+    link: "https://materna-six.vercel.app",
     stack: ["React Native", "JavaScript", "product design", "accessibility thinking"],
     highlights: ["Designed for a real human need", "Balanced empathy with practical engineering", "Built under hackathon constraints"]
   },
@@ -45,25 +45,25 @@ const portfolioData = {
       text: "A maternal-care platform idea with life-saving potential: helping women find support, guidance, and clarity when every moment can matter.",
       caseStudy: true,
       actionText: "View case study",
-      link: "https://prashma03.github.io/Materna/",
+      link: "https://materna-six.vercel.app",
       linkText: "Open website"
     },
     {
       title: "Yatri",
       text: "A travel-safety project designed to help tourists avoid scams, compare trustworthy options, and move through unfamiliar places with more confidence.",
-      link: "https://prashma03.github.io/Yatri/",
+      link: "https://yatri-bice.vercel.app",
       linkText: "Open website"
     },
     {
       title: "App-Swipe",
       text: "A Tinder-style movie discovery app where users swipe left or right to find movies they like.",
-      link: "https://prashma03.github.io/App-Swipe/",
-      linkText: "Open website"
+      link: "https://github.com/prashma03/App-swipe",
+      linkText: "View GitHub"
     },
     {
       title: "Leela",
       text: "A daily spiritual-learning app for people who may not have time to read the whole Bhagwat Gita, but would still value a few meaningful lines every day.",
-      link: "https://prashma03.github.io/Leela/",
+      link: "https://leela-ruddy.vercel.app",
       linkText: "Open website"
     }
   ],
