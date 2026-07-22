@@ -132,6 +132,23 @@ function openFeaturedCaseStudy() {
   caseStudy.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+function closeFeaturedCaseStudy() {
+  const caseStudy = document.querySelector('.featured-case-study');
+  const projectCards = document.querySelector('#projects .scrapbook-cards');
+
+  if (!caseStudy) {
+    return;
+  }
+
+  caseStudy.classList.add('is-hidden');
+  caseStudy.classList.remove('is-open');
+  caseStudy.setAttribute('aria-hidden', 'true');
+
+  if (projectCards) {
+    projectCards.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
 function renderCards(sectionId, items) {
   const container = document.querySelector('#' + sectionId + ' .scrapbook-cards');
 
@@ -209,6 +226,12 @@ function renderFeaturedProject(project) {
   }
 
   caseStudy.appendChild(meta);
+}
+
+const caseBackButton = document.querySelector('.case-back-button');
+
+if (caseBackButton) {
+  caseBackButton.addEventListener('click', closeFeaturedCaseStudy);
 }
 
 function renderSkills(skills) {
