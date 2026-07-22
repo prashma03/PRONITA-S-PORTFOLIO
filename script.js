@@ -999,6 +999,7 @@ const aiButton = document.querySelector('.ai-button');
 const aiClose = document.querySelector('.ai-close');
 const aiForm = document.querySelector('.ai-form');
 const aiInput = document.querySelector('.ai-input');
+const aiSend = document.querySelector('.ai-send');
 const aiMessages = document.querySelector('.ai-messages');
 const aiSuggestionButtons = document.querySelectorAll('.ai-suggestions button');
 
@@ -1030,6 +1031,24 @@ function listSkillItems(skills) {
   }).join('. ');
 }
 
+function findProjectByQuestion(projects, lowerQuestion) {
+  return projects.find(function(project) {
+    const normalizedTitle = project.title.toLowerCase();
+    const compactTitle = normalizedTitle.replace(/[^a-z0-9]/g, '');
+    const compactQuestion = lowerQuestion.replace(/[^a-z0-9]/g, '');
+
+    return lowerQuestion.includes(normalizedTitle) || compactQuestion.includes(compactTitle);
+  });
+}
+
+function formatProjectLink(project) {
+  if (!project.link) {
+    return '';
+  }
+
+  return ' Link: ' + project.link;
+}
+
 function getPortfolioAnswer(question) {
   const lowerQuestion = question.toLowerCase();
   const data = typeof portfolioData !== 'undefined' ? portfolioData : null;
@@ -1039,15 +1058,19 @@ function getPortfolioAnswer(question) {
   }
 
   if (lowerQuestion === 'hi' || lowerQuestion === 'hello' || lowerQuestion === 'hey' || lowerQuestion.includes('good morning') || lowerQuestion.includes('good afternoon') || lowerQuestion.includes('good evening')) {
-    return "Hello! I am Pronita's portfolio guide. You can ask me about her projects, skills, achievements, research, goals, hobbies, or why she would be a strong hire.";
+    return "Hello! I am Pronita's portfolio guide. Want the fast tour? Ask me about Materna, Yatri, Leela, App-Swipe, volunteering, skills, achievements, or why she would be a strong hire.";
   }
 
   if (lowerQuestion.includes('thank')) {
     return "You are welcome! I am happy to help you explore Pronita's work.";
   }
 
+  if (lowerQuestion.includes('help') || lowerQuestion.includes('what should i ask') || lowerQuestion.includes('suggest')) {
+    return "Try: 'Tell me about Materna', 'What makes Yatri useful?', 'What are Pronita's strongest skills?', 'Tell me about volunteering', or 'Why should a big tech recruiter notice her?'";
+  }
+
   if (lowerQuestion.includes('who are you') || lowerQuestion.includes('what can you do')) {
-    return "I am a small interactive guide for this portfolio. I can summarize Pronita's projects, skills, achievements, research, goals, hobbies, contact details, and featured case study.";
+    return "I am a small interactive guide for this portfolio. I can summarize projects, compare strengths, explain the Materna case study, point you to live demos, and give recruiter-friendly highlights.";
   }
 
   if (lowerQuestion.includes('hire') || lowerQuestion.includes('why pronita') || lowerQuestion.includes('recruiter')) {
@@ -1058,16 +1081,42 @@ function getPortfolioAnswer(question) {
     return 'Skill snapshot: ' + listSkillItems(data.skills) + '.';
   }
 
-  if (lowerQuestion.includes('strongest') || lowerQuestion.includes('materna') || lowerQuestion.includes('case study')) {
-    return data.featuredProject.title + ' is the featured project. ' + data.featuredProject.summary + ' Engineering focus: ' + data.featuredProject.engineering + ' Stack and concepts: ' + data.featuredProject.stack.join(', ') + '.';
+  if (lowerQuestion.includes('link') || lowerQuestion.includes('demo') || lowerQuestion.includes('website') || lowerQuestion.includes('open')) {
+    const project = findProjectByQuestion(data.projects, lowerQuestion);
+
+    if (lowerQuestion.includes('materna') || lowerQuestion.includes('vitals') || lowerQuestion.includes('hardware')) {
+      return 'Materna has two public demos. With vitals: ' + data.featuredProject.demoLinks[0].url + ' Without vitals: ' + data.featuredProject.demoLinks[1].url;
+    }
+
+    if (project) {
+      return project.title + ' opens here: ' + project.link;
+    }
+
+    return 'Project links: Materna with vitals: ' + data.featuredProject.demoLinks[0].url + ' Materna without vitals: ' + data.featuredProject.demoLinks[1].url + ' Yatri: ' + data.projects[1].link + ' App-Swipe: ' + data.projects[2].link + ' Leela: ' + data.projects[3].link;
+  }
+
+  if (lowerQuestion.includes('strongest') || lowerQuestion.includes('materna') || lowerQuestion.includes('case study') || lowerQuestion.includes('hardware') || lowerQuestion.includes('vitals')) {
+    return data.featuredProject.title + ' is the featured project because it connects software coordination with hardware-inspired vital tracking. ' + data.featuredProject.summary + ' Engineering focus: ' + data.featuredProject.engineering + ' Stack and concepts: ' + data.featuredProject.stack.join(', ') + '.';
   }
 
   if (lowerQuestion.includes('resume')) {
     return 'Use the Resume link in the contact card. Before submitting, make sure Pronita-Ghimire-Resume.pdf is in the same folder as this website.';
   }
 
+  const namedProject = findProjectByQuestion(data.projects, lowerQuestion);
+  if (namedProject) {
+    return namedProject.title + ': ' + namedProject.text + formatProjectLink(namedProject);
+  }
+
+  if (lowerQuestion.includes('volunteer') || lowerQuestion.includes('volunteering') || lowerQuestion.includes('nepal') || lowerQuestion.includes('children')) {
+    const volunteering = data.hobbies.find(function(hobby) {
+      return hobby.id === 'volunteering';
+    });
+    return volunteering.title + ': ' + volunteering.text + ' It adds a service and empathy dimension to her technical story.';
+  }
+
   if (lowerQuestion.includes('project')) {
-    return data.owner.firstName + "'s projects include " + listTitles(data.projects) + '. The featured case study is ' + data.featuredProject.title + ', which shows product thinking, user empathy, and engineering growth.';
+    return data.owner.firstName + "'s projects include " + listTitles(data.projects) + '. Materna shows software plus hardware/vitals thinking, Yatri focuses on tourist safety, Leela turns spiritual learning into a daily habit, and App-Swipe shows playful product building.';
   }
 
   if (lowerQuestion.includes('achievement') || lowerQuestion.includes('star') || lowerQuestion.includes('resident') || lowerQuestion.includes('ambassador')) {
@@ -1090,7 +1139,7 @@ function getPortfolioAnswer(question) {
     return 'You can contact ' + data.owner.firstName + ' at ' + data.contact.email + ', or use the letter form in the contact card.';
   }
 
-  return 'Try asking about projects, skills, the featured case study, why Pronita would be a strong hire, achievements, goals, research, or contact info.';
+  return "I can help with that from a portfolio angle. Try asking about a specific project, live demo links, Materna's software/hardware story, volunteering, skills, achievements, goals, research, or contact info.";
 }
 
 function askPortfolioGuide(question) {
@@ -1101,28 +1150,48 @@ function askPortfolioGuide(question) {
   }
 
   addAiMessage(cleanQuestion, 'user');
+  aiInput.value = '';
+  aiSend.disabled = true;
 
   setTimeout(function() {
     addAiMessage(getPortfolioAnswer(cleanQuestion), 'bot');
+    aiInput.focus();
   }, 260);
 }
 
 aiButton.addEventListener('click', function() {
   aiWidget.classList.toggle('open');
+
+  if (aiWidget.classList.contains('open')) {
+    setTimeout(function() {
+      aiInput.focus();
+    }, 120);
+  }
 });
 
 aiClose.addEventListener('click', function() {
   aiWidget.classList.remove('open');
 });
 
+aiInput.addEventListener('input', function() {
+  aiSend.disabled = !aiInput.value.trim();
+});
+
 aiForm.addEventListener('submit', function(event) {
   event.preventDefault();
   askPortfolioGuide(aiInput.value);
-  aiInput.value = '';
 });
 
 aiSuggestionButtons.forEach(function(button) {
   button.addEventListener('click', function() {
     askPortfolioGuide(button.dataset.question);
   });
+});
+
+aiSend.disabled = true;
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape' && aiWidget.classList.contains('open')) {
+    aiWidget.classList.remove('open');
+  }
 });

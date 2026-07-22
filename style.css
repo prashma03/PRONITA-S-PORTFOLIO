@@ -437,6 +437,10 @@ h1 {
     cursor: none;
 }
 
+.ai-send:disabled {
+    opacity: 0.45;
+}
+
 .ai-form {
     display: flex;
     gap: 8px;
