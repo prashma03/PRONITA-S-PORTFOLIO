@@ -22,13 +22,23 @@ const portfolioData = {
   featuredProject: {
     title: "Materna",
     label: "featured case study",
-    summary: "A maternal-care hackathon project built around a serious human problem: giving women clearer, faster access to support when confusion, delay, or missing information can affect real lives.",
-    problem: "Maternal care can feel fragmented, stressful, and hard to navigate. Materna explores how thoughtful technology could help women find guidance sooner, reduce panic, and make support easier to reach.",
-    role: "Worked across product thinking, front-end experience, and user-centered feature planning.",
-    engineering: "Clear flows, accessible interface decisions, and a foundation that could grow into a practical support platform for women and families.",
+    summary: "A maternal-care project that connects software coordination with hardware-inspired vital tracking, showing how patient tools, doctor workflows, and health signals could work together when every moment matters.",
+    problem: "Maternal care can feel fragmented, stressful, and hard to navigate. Materna explores how software plus vitals-aware hardware concepts could help women find guidance sooner, reduce panic, and make support easier to reach.",
+    role: "Worked across product thinking, front-end experience, user-centered feature planning, and the interaction model between patient software and health-signal tracking.",
+    engineering: "Designed clear patient and doctor flows with a foundation for live vitals, emergency coordination, report sharing, and an accessible support platform for women and families.",
     link: "https://materna-six.vercel.app",
-    stack: ["React Native", "JavaScript", "product design", "accessibility thinking"],
-    highlights: ["Designed for a real human need", "Balanced empathy with practical engineering", "Built under hackathon constraints"]
+    demoLinks: [
+      {
+        label: "Open demo with vitals",
+        url: "https://materna-h2dmp2djr-pronita-ghimires-projects.vercel.app"
+      },
+      {
+        label: "Open demo without vitals",
+        url: "https://materna-six.vercel.app"
+      }
+    ],
+    stack: ["React Native", "JavaScript", "hardware integration concept", "vitals tracking", "doctor dashboard", "accessibility thinking"],
+    highlights: ["Integrates software workflows with hardware-inspired vital tracking", "Designed for a real human need where delay can become dangerous", "Balances empathy, emergency support, and practical engineering"]
   },
 
   skills: {

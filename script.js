@@ -210,18 +210,26 @@ function renderFeaturedProject(project) {
     existingActions.remove();
   }
 
-  if (project.link) {
+  const demoLinks = project.demoLinks || (project.link ? [{
+    label: 'Open ' + project.title + ' website',
+    url: project.link
+  }] : []);
+
+  if (demoLinks.length) {
     const actions = document.createElement('div');
     actions.className = 'case-actions';
 
-    const link = document.createElement('a');
-    link.className = 'scrapbook-link';
-    link.href = project.link;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.textContent = 'Open ' + project.title + ' website';
+    demoLinks.forEach(function(demo) {
+      const link = document.createElement('a');
+      link.className = 'scrapbook-link';
+      link.href = demo.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = demo.label;
 
-    actions.appendChild(link);
+      actions.appendChild(link);
+    });
+
     caseStudy.appendChild(actions);
   }
 
