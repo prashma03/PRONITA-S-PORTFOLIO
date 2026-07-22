@@ -22,10 +22,11 @@ const portfolioData = {
   featuredProject: {
     title: "Materna",
     label: "featured case study",
-    summary: "A maternal-care hackathon project shaped around accessible support, thoughtful product design, and practical technology for families.",
-    problem: "Maternal care can feel fragmented, stressful, and hard to navigate when people need clear support quickly.",
+    summary: "A maternal-care hackathon project built around a serious human problem: giving women clearer, faster access to support when confusion, delay, or missing information can affect real lives.",
+    problem: "Maternal care can feel fragmented, stressful, and hard to navigate. Materna explores how thoughtful technology could help women find guidance sooner, reduce panic, and make support easier to reach.",
     role: "Worked across product thinking, front-end experience, and user-centered feature planning.",
-    engineering: "Clear flows, accessible interface decisions, and a foundation that can grow into a complete support platform.",
+    engineering: "Clear flows, accessible interface decisions, and a foundation that could grow into a practical support platform for women and families.",
+    link: "https://prashma03.github.io/Materna/",
     stack: ["React Native", "JavaScript", "product design", "accessibility thinking"],
     highlights: ["Designed for a real human need", "Balanced empathy with practical engineering", "Built under hackathon constraints"]
   },
@@ -41,8 +42,16 @@ const portfolioData = {
   projects: [
     {
       title: "Materna",
-      text: "A meaningful project focused on maternal care, support, and accessible technology.",
+      text: "A maternal-care platform idea with life-saving potential: helping women find support, guidance, and clarity when every moment can matter.",
+      caseStudy: true,
+      actionText: "View case study",
       link: "https://prashma03.github.io/Materna/",
+      linkText: "Open website"
+    },
+    {
+      title: "Yatri",
+      text: "A travel-safety project designed to help tourists avoid scams, compare trustworthy options, and move through unfamiliar places with more confidence.",
+      link: "https://prashma03.github.io/Yatri/",
       linkText: "Open website"
     },
     {
@@ -53,7 +62,7 @@ const portfolioData = {
     },
     {
       title: "Leela",
-      text: "An interactive kids app designed to teach stories and lessons from the Bhagwat Gita in a fun way.",
+      text: "A daily spiritual-learning app for people who may not have time to read the whole Bhagwat Gita, but would still value a few meaningful lines every day.",
       link: "https://prashma03.github.io/Leela/",
       linkText: "Open website"
     }

@@ -63,7 +63,29 @@ function createCard(item) {
   card.appendChild(title);
   card.appendChild(text);
 
-  if (item.link) {
+  if (item.caseStudy) {
+    card.classList.add('project-case-trigger');
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', 'View ' + item.title + ' case study');
+
+    const action = document.createElement('button');
+    action.className = 'scrapbook-link';
+    action.type = 'button';
+    action.textContent = item.actionText || 'View case study';
+    card.appendChild(action);
+
+    card.addEventListener('click', function() {
+      openFeaturedCaseStudy();
+    });
+
+    card.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openFeaturedCaseStudy();
+      }
+    });
+  } else if (item.link) {
     card.classList.add('clickable-card');
     card.dataset.link = item.link;
     card.tabIndex = 0;
@@ -95,6 +117,19 @@ function createCard(item) {
   }
 
   return card;
+}
+
+function openFeaturedCaseStudy() {
+  const caseStudy = document.querySelector('.featured-case-study');
+
+  if (!caseStudy) {
+    return;
+  }
+
+  caseStudy.classList.remove('is-hidden');
+  caseStudy.classList.add('is-open');
+  caseStudy.setAttribute('aria-hidden', 'false');
+  caseStudy.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderCards(sectionId, items) {
@@ -151,6 +186,26 @@ function renderFeaturedProject(project) {
   const existingTags = caseStudy.querySelector('.case-tags');
   if (existingTags) {
     existingTags.remove();
+  }
+
+  const existingActions = caseStudy.querySelector('.case-actions');
+  if (existingActions) {
+    existingActions.remove();
+  }
+
+  if (project.link) {
+    const actions = document.createElement('div');
+    actions.className = 'case-actions';
+
+    const link = document.createElement('a');
+    link.className = 'scrapbook-link';
+    link.href = project.link;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'Open ' + project.title + ' website';
+
+    actions.appendChild(link);
+    caseStudy.appendChild(actions);
   }
 
   caseStudy.appendChild(meta);

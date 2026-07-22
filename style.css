@@ -1321,6 +1321,10 @@ body.paper-pulled .scrapbook-menu {
     cursor: none;
 }
 
+.scrapbook-card.project-case-trigger {
+    cursor: none;
+}
+
 .scrapbook-card h3 {
     font-family: "Edu NSW ACT Cursive", cursive;
     color: #f2728e;
@@ -1345,8 +1349,14 @@ body.paper-pulled .scrapbook-menu {
     border-radius: 999px;
     background-color: rgba(255, 212, 221, 0.28);
     color: #f2728e;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.92rem;
     font-weight: 700;
     text-decoration: none;
+}
+
+button.scrapbook-link {
+    cursor: none;
 }
 
 .scrapbook-link:hover {
@@ -1360,6 +1370,7 @@ body.paper-pulled .scrapbook-menu {
 }
 
 .featured-case-study {
+    margin-top: 32px;
     padding: 32px;
     border: 1px solid rgba(205, 189, 255, 0.74);
     border-radius: 8px;
@@ -1373,6 +1384,10 @@ body.paper-pulled .scrapbook-menu {
         0px 16px 36px rgba(0, 0, 0, 0.28),
         0px 0px 28px rgba(188, 166, 255, 0.22);
     position: relative;
+}
+
+.featured-case-study.is-hidden {
+    display: none;
 }
 
 .featured-case-study::before {
@@ -1479,6 +1494,13 @@ body.paper-pulled .scrapbook-menu {
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 22px;
+}
+
+.case-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .case-tags span,
