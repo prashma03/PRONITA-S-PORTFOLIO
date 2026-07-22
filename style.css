@@ -1317,6 +1317,10 @@ body.paper-pulled .scrapbook-menu {
         0px 0px 30px rgba(188, 166, 255, 0.28);
 }
 
+.scrapbook-card.clickable-card {
+    cursor: none;
+}
+
 .scrapbook-card h3 {
     font-family: "Edu NSW ACT Cursive", cursive;
     color: #f2728e;
@@ -1331,15 +1335,22 @@ body.paper-pulled .scrapbook-menu {
 }
 
 .scrapbook-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 16px;
+    min-height: 34px;
+    padding: 0 12px;
+    border: 1px solid rgba(242, 114, 142, 0.3);
+    border-radius: 999px;
+    background-color: rgba(255, 212, 221, 0.28);
     color: #f2728e;
     font-weight: 700;
     text-decoration: none;
 }
 
 .scrapbook-link:hover {
-    text-decoration: underline;
+    background-color: rgba(255, 212, 221, 0.45);
 }
 
 .featured-case-study,

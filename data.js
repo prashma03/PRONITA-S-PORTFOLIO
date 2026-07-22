@@ -41,15 +41,21 @@ const portfolioData = {
   projects: [
     {
       title: "Materna",
-      text: "A meaningful project focused on maternal care, support, and accessible technology."
+      text: "A meaningful project focused on maternal care, support, and accessible technology.",
+      link: "https://prashma03.github.io/Materna/",
+      linkText: "Open website"
     },
     {
       title: "App-Swipe",
-      text: "A Tinder-style movie discovery app where users swipe left or right to find movies they like."
+      text: "A Tinder-style movie discovery app where users swipe left or right to find movies they like.",
+      link: "https://prashma03.github.io/App-Swipe/",
+      linkText: "Open website"
     },
     {
-      title: "Bhagwat-Gita-Kids-App",
-      text: "An interactive kids app designed to teach stories and lessons from the Bhagwat Gita in a fun way."
+      title: "Leela",
+      text: "An interactive kids app designed to teach stories and lessons from the Bhagwat Gita in a fun way.",
+      link: "https://prashma03.github.io/Leela/",
+      linkText: "Open website"
     }
   ],
 

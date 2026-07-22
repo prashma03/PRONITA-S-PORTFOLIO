@@ -64,6 +64,12 @@ function createCard(item) {
   card.appendChild(text);
 
   if (item.link) {
+    card.classList.add('clickable-card');
+    card.dataset.link = item.link;
+    card.tabIndex = 0;
+    card.setAttribute('role', 'link');
+    card.setAttribute('aria-label', 'Open ' + item.title + ' website');
+
     const link = document.createElement('a');
     link.className = 'scrapbook-link';
     link.href = item.link;
@@ -71,6 +77,21 @@ function createCard(item) {
     link.rel = 'noopener noreferrer';
     link.textContent = item.linkText || 'Open link';
     card.appendChild(link);
+
+    card.addEventListener('click', function(event) {
+      if (event.target.closest('a')) {
+        return;
+      }
+
+      window.open(item.link, '_blank', 'noopener');
+    });
+
+    card.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        window.open(item.link, '_blank', 'noopener');
+      }
+    });
   }
 
   return card;
@@ -921,6 +942,18 @@ function getPortfolioAnswer(question) {
 
   if (!data) {
     return 'I can answer once the portfolio data file is loaded.';
+  }
+
+  if (lowerQuestion === 'hi' || lowerQuestion === 'hello' || lowerQuestion === 'hey' || lowerQuestion.includes('good morning') || lowerQuestion.includes('good afternoon') || lowerQuestion.includes('good evening')) {
+    return "Hello! I am Pronita's portfolio guide. You can ask me about her projects, skills, achievements, research, goals, hobbies, or why she would be a strong hire.";
+  }
+
+  if (lowerQuestion.includes('thank')) {
+    return "You are welcome! I am happy to help you explore Pronita's work.";
+  }
+
+  if (lowerQuestion.includes('who are you') || lowerQuestion.includes('what can you do')) {
+    return "I am a small interactive guide for this portfolio. I can summarize Pronita's projects, skills, achievements, research, goals, hobbies, contact details, and featured case study.";
   }
 
   if (lowerQuestion.includes('hire') || lowerQuestion.includes('why pronita') || lowerQuestion.includes('recruiter')) {
