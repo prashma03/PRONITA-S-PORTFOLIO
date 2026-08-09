@@ -484,6 +484,8 @@ body {
     color:#120817;
     margin: 0;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
     scroll-behavior: smooth;
     --star-x: 0px;
     --star-y: 0px;
@@ -2452,6 +2454,7 @@ body.dark-mode .goal-note p:last-child {
   html,
   body {
     overflow-x: hidden;
+    scroll-behavior: auto;
   }
 
   h1 {
@@ -2528,6 +2531,11 @@ body.dark-mode .goal-note p:last-child {
   .scrapbook-section {
     min-height: 100svh;
     padding: 86px 18px 104px;
+    scroll-margin-top: 0;
+  }
+
+  body.paper-pulled .scrapbook-section {
+    display: block;
   }
 
   .scrapbook-menu h2,

@@ -129,7 +129,7 @@ function openFeaturedCaseStudy() {
   caseStudy.classList.remove('is-hidden');
   caseStudy.classList.add('is-open');
   caseStudy.setAttribute('aria-hidden', 'false');
-  caseStudy.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scrollToElement(caseStudy);
 }
 
 function closeFeaturedCaseStudy() {
@@ -145,7 +145,7 @@ function closeFeaturedCaseStudy() {
   caseStudy.setAttribute('aria-hidden', 'true');
 
   if (projectCards) {
-    projectCards.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToElement(projectCards);
   }
 }
 
@@ -522,10 +522,7 @@ backToCoverButton.addEventListener('click', function() {
   paperHasPulled = false;
   setActiveDot('');
 
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
+  scrollToTop();
 });
 
 let paperHasPulled = false;
@@ -533,6 +530,28 @@ let wheelPageTurnLocked = false;
 let touchStartX = 0;
 let touchStartY = 0;
 let touchStartTime = 0;
+
+function usesNativeMobileScroll() {
+  return window.matchMedia('(max-width: 760px), (hover: none) and (pointer: coarse)').matches;
+}
+
+function scrollToElement(element) {
+  if (!element) {
+    return;
+  }
+
+  element.scrollIntoView({
+    behavior: usesNativeMobileScroll() ? 'auto' : 'smooth',
+    block: 'start'
+  });
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: usesNativeMobileScroll() ? 'auto' : 'smooth'
+  });
+}
 
 function shouldIgnorePageTurn(event) {
   return event.target.closest('.ai-panel, .contact-card, .letter-form');
@@ -545,7 +564,7 @@ function pullToChapterIndex() {
 
   window.scrollTo({
     top: window.innerHeight,
-    behavior: 'smooth'
+    behavior: usesNativeMobileScroll() ? 'auto' : 'smooth'
   });
 }
 
@@ -623,7 +642,7 @@ window.addEventListener('wheel', function(event) {
 
     window.scrollTo({
       top: window.innerHeight,
-      behavior: 'smooth'
+      behavior: usesNativeMobileScroll() ? 'auto' : 'smooth'
     });
 
     return;
@@ -676,6 +695,10 @@ document.addEventListener('touchend', function(event) {
     return;
   }
 
+  if (usesNativeMobileScroll()) {
+    return;
+  }
+
   const activeSection = document.querySelector('.scrapbook-section.active-section');
 
   if (!activeSection) {
@@ -719,9 +742,7 @@ function showScrapbookMenu() {
   paperHasPulled = true;
   setActiveDot('scrapbook-menu');
 
-  document.querySelector('#scrapbook-menu').scrollIntoView({
-    behavior: 'smooth'
-  });
+  scrollToElement(document.querySelector('#scrapbook-menu'));
 }
 
 function showScrapbookSection(sectionId) {
@@ -737,9 +758,7 @@ function showScrapbookSection(sectionId) {
   section.classList.add('active-section');
   setActiveDot(sectionId);
 
-  section.scrollIntoView({
-    behavior: 'smooth'
-  });
+  scrollToElement(section);
 }
 
 backToPolaroidButton.addEventListener('click', function() {
@@ -751,10 +770,7 @@ backToPolaroidButton.addEventListener('click', function() {
 
   document.body.classList.add('open-curtain');
 
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
+  scrollToTop();
 
   setTimeout(function() {
     document.body.classList.remove('paper-pulled');
@@ -796,10 +812,7 @@ sideDots.forEach(function(dot) {
     document.body.classList.add('open-curtain');
 
     if (sectionId === 'polaroid-page') {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      scrollToTop();
 
       setTimeout(function() {
         document.body.classList.remove('paper-pulled');
