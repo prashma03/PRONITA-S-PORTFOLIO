@@ -74,6 +74,17 @@ function createCard(item) {
     action.type = 'button';
     action.textContent = item.actionText || 'View case study';
     card.appendChild(action);
+    if (item.link) {
+      const link = document.createElement('a');
+      link.className = 'scrapbook-link';
+      link.href = item.link;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = item.linkText || 'Open website';
+      link.addEventListener('click', function(event) { event.stopPropagation(); });
+      link.addEventListener('keydown', function(event) { event.stopPropagation(); });
+      card.appendChild(link);
+    }
 
     card.addEventListener('click', function() {
       openFeaturedCaseStudy();
@@ -294,6 +305,7 @@ function renderPortfolioData() {
   document.querySelector('.email-text').textContent = contact.email;
   document.querySelector('.linkedin-link').href = contact.linkedin;
   document.querySelector('.github-link').href = contact.github;
+  document.querySelectorAll('.founder-link').forEach(function(link) { link.href = contact.website; });
 
   const resumeLink = document.querySelector('.resume-link');
   if (contact.resume) {

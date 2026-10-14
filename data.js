@@ -16,6 +16,7 @@ const portfolioData = {
     linkedin: "https://www.linkedin.com/in/pronitaghimire3553/",
     github: "https://github.com/prashma03",
     resume: "Pronita-Ghimire-Resume.pdf",
+    website: "https://krishnaleelas.com/",
     formEndpoint: "https://formspree.io/f/mgojkkrg"
   },
 
@@ -77,7 +78,7 @@ const portfolioData = {
     {
       title: "Leela — Founder Project",
       text: "Founded and built Leela, a daily spiritual-learning app for people who may not have time to read the whole Bhagwat Gita, but would still value a few meaningful lines every day.",
-      link: "https://leela-ruddy.vercel.app/",
+      link: "https://krishnaleelas.com/",
       linkText: "Open website"
     }
   ],
@@ -245,7 +246,9 @@ const portfolioData = {
   hackathons: [
     {
       title: "Materna",
-      text: "A hackathon project built around maternal care, thoughtful design, and practical support."
+      text: "A hackathon project built around maternal care, thoughtful design, and practical support.",
+      link: "https://materna-six.vercel.app/demo",
+      linkText: "Try live demo"
     }
   ]
 };
