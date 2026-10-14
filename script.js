@@ -519,6 +519,7 @@ backToCoverButton.addEventListener('click', function() {
   });
 
   document.body.classList.remove('open-curtain', 'paper-pulled');
+  syncMobileScrollMode();
   paperHasPulled = false;
   setActiveDot('');
 
@@ -530,23 +531,35 @@ let wheelPageTurnLocked = false;
 let touchStartX = 0;
 let touchStartY = 0;
 let touchStartTime = 0;
+let wheelPageTurnUnlockTimer;
 
 function usesNativeMobileScroll() {
   return window.matchMedia('(max-width: 760px), (hover: none) and (pointer: coarse)').matches;
 }
 
-function scrollToElement(element) {
+function syncMobileScrollMode() {
+  document.documentElement.classList.toggle(
+    'story-scroll-open',
+    document.body.classList.contains('paper-pulled') && usesNativeMobileScroll()
+  );
+}
+
+function scrollToElement(element, options) {
   if (!element) {
     return;
   }
 
+  syncMobileScrollMode();
+
   element.scrollIntoView({
-    behavior: usesNativeMobileScroll() ? 'auto' : 'smooth',
+    behavior: options && options.instant ? 'auto' : usesNativeMobileScroll() ? 'auto' : 'smooth',
     block: 'start'
   });
 }
 
 function scrollToTop() {
+  syncMobileScrollMode();
+
   window.scrollTo({
     top: 0,
     behavior: usesNativeMobileScroll() ? 'auto' : 'smooth'
@@ -557,14 +570,15 @@ function shouldIgnorePageTurn(event) {
   return event.target.closest('.ai-panel, .contact-card, .letter-form');
 }
 
-function pullToChapterIndex() {
+function pullToChapterIndex(options) {
   paperHasPulled = true;
   document.body.classList.add('paper-pulled');
   setActiveDot('scrapbook-menu');
+  syncMobileScrollMode();
 
   window.scrollTo({
     top: window.innerHeight,
-    behavior: usesNativeMobileScroll() ? 'auto' : 'smooth'
+    behavior: options && options.instant ? 'auto' : usesNativeMobileScroll() ? 'auto' : 'smooth'
   });
 }
 
@@ -577,6 +591,15 @@ function isActiveSectionAtEdge(activeSection, edge) {
   }
 
   return window.scrollY + window.innerHeight >= sectionBottom - 16;
+}
+
+function lockWheelPageTurn(duration) {
+  wheelPageTurnLocked = true;
+  window.clearTimeout(wheelPageTurnUnlockTimer);
+
+  wheelPageTurnUnlockTimer = window.setTimeout(function() {
+    wheelPageTurnLocked = false;
+  }, duration);
 }
 
 function turnPageFromScroll(direction) {
@@ -592,32 +615,33 @@ function turnPageFromScroll(direction) {
     return false;
   }
 
-  wheelPageTurnLocked = true;
-
-  setTimeout(function() {
-    wheelPageTurnLocked = false;
-  }, 900);
+  lockWheelPageTurn(1250);
 
   if (direction === 'next') {
     if (activeIndex < scrapbookPageOrder.length - 1) {
-      showScrapbookSection(scrapbookPageOrder[activeIndex + 1]);
+      showScrapbookSection(scrapbookPageOrder[activeIndex + 1], { instant: true });
     } else {
-      showScrapbookMenu();
+      showScrapbookMenu({ instant: true });
     }
 
     return true;
   }
 
   if (activeIndex > 0) {
-    showScrapbookSection(scrapbookPageOrder[activeIndex - 1]);
+    showScrapbookSection(scrapbookPageOrder[activeIndex - 1], { instant: true });
   } else {
-    showScrapbookMenu();
+    showScrapbookMenu({ instant: true });
   }
 
   return true;
 }
 
 window.addEventListener('wheel', function(event) {
+  if (paperHasPulled === true && wheelPageTurnLocked && !shouldIgnorePageTurn(event)) {
+    event.preventDefault();
+    return;
+  }
+
   if (paperHasPulled === true && !shouldIgnorePageTurn(event)) {
     const activeSection = document.querySelector('.scrapbook-section.active-section');
 
@@ -640,17 +664,17 @@ window.addEventListener('wheel', function(event) {
   if (event.deltaY < 0 && paperHasPulled === true && window.scrollY <= window.innerHeight + 80) {
     event.preventDefault();
 
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: usesNativeMobileScroll() ? 'auto' : 'smooth'
-    });
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: 'auto'
+      });
 
     return;
   }
 
   if (event.deltaY > 0 && document.body.classList.contains('open-curtain') && paperHasPulled === false) {
     event.preventDefault();
-    pullToChapterIndex();
+    pullToChapterIndex({ instant: true });
   }
 }, { passive: false });
 
@@ -736,16 +760,17 @@ function clearActiveSections() {
   });
 }
 
-function showScrapbookMenu() {
+function showScrapbookMenu(options) {
   clearActiveSections();
   document.body.classList.add('open-curtain', 'paper-pulled');
   paperHasPulled = true;
   setActiveDot('scrapbook-menu');
+  syncMobileScrollMode();
 
-  scrollToElement(document.querySelector('#scrapbook-menu'));
+  scrollToElement(document.querySelector('#scrapbook-menu'), options);
 }
 
-function showScrapbookSection(sectionId) {
+function showScrapbookSection(sectionId, options) {
   const section = document.querySelector('#' + sectionId);
 
   if (!section) {
@@ -757,8 +782,9 @@ function showScrapbookSection(sectionId) {
   paperHasPulled = true;
   section.classList.add('active-section');
   setActiveDot(sectionId);
+  syncMobileScrollMode();
 
-  scrollToElement(section);
+  scrollToElement(section, options);
 }
 
 backToPolaroidButton.addEventListener('click', function() {
@@ -774,10 +800,14 @@ backToPolaroidButton.addEventListener('click', function() {
 
   setTimeout(function() {
     document.body.classList.remove('paper-pulled');
+    syncMobileScrollMode();
     paperHasPulled = false;
     setActiveDot('polaroid-page');
   }, 120);
 });
+
+window.addEventListener('resize', syncMobileScrollMode);
+window.addEventListener('orientationchange', syncMobileScrollMode);
 
 sectionBackButtons.forEach(function(button) {
   button.addEventListener('click', showScrapbookMenu);
@@ -816,6 +846,7 @@ sideDots.forEach(function(dot) {
 
       setTimeout(function() {
         document.body.classList.remove('paper-pulled');
+        syncMobileScrollMode();
         paperHasPulled = false;
         setActiveDot('polaroid-page');
       }, 120);
@@ -1071,7 +1102,7 @@ function getPortfolioAnswer(question) {
   }
 
   if (lowerQuestion === 'hi' || lowerQuestion === 'hello' || lowerQuestion === 'hey' || lowerQuestion.includes('good morning') || lowerQuestion.includes('good afternoon') || lowerQuestion.includes('good evening')) {
-    return "Hello! I am Pronita's portfolio guide. Want the fast tour? Ask me about Materna, Yatri, Leela, App-Swipe, volunteering, skills, achievements, or why she would be a strong hire.";
+    return "Hello! I am Pronita's portfolio guide. Want the fast tour? Ask me about Materna, Yatri, Leela, App-Swipe, volunteering, founder work, skills, achievements, or why she would be a strong hire.";
   }
 
   if (lowerQuestion.includes('thank')) {
@@ -1087,7 +1118,7 @@ function getPortfolioAnswer(question) {
   }
 
   if (lowerQuestion.includes('hire') || lowerQuestion.includes('why pronita') || lowerQuestion.includes('recruiter')) {
-    return data.owner.firstName + ' combines computer science, mathematics, creative communication, leadership, and project-building energy. She is early-career, but she shows strong signals big teams care about: curiosity, consistency, empathy for users, and the discipline to keep learning hard technical skills.';
+    return data.owner.firstName + ' combines computer science, mathematics, creative communication, leadership, founder energy through Leela, and project-building discipline. She is early-career, but she shows strong signals big teams care about: curiosity, consistency, empathy for users, ownership, and the discipline to keep learning hard technical skills.';
   }
 
   if (lowerQuestion.includes('skill') || lowerQuestion.includes('tech') || lowerQuestion.includes('technology') || lowerQuestion.includes('stack')) {
@@ -1098,14 +1129,14 @@ function getPortfolioAnswer(question) {
     const project = findProjectByQuestion(data.projects, lowerQuestion);
 
     if (lowerQuestion.includes('materna') || lowerQuestion.includes('vitals') || lowerQuestion.includes('hardware')) {
-      return 'Materna has two public demos. With vitals: ' + data.featuredProject.demoLinks[0].url + ' Without vitals: ' + data.featuredProject.demoLinks[1].url;
+      return 'Materna has a recruiter-friendly live demo: ' + data.featuredProject.demoLinks[0].url + ' Patient view: ' + data.featuredProject.demoLinks[1].url + ' Doctor view: ' + data.featuredProject.demoLinks[2].url;
     }
 
     if (project) {
       return project.title + ' opens here: ' + project.link;
     }
 
-    return 'Project links: Materna with vitals: ' + data.featuredProject.demoLinks[0].url + ' Materna without vitals: ' + data.featuredProject.demoLinks[1].url + ' Yatri: ' + data.projects[1].link + ' App-Swipe: ' + data.projects[2].link + ' Leela: ' + data.projects[3].link;
+    return 'Project links: Materna live demo: ' + data.featuredProject.demoLinks[0].url + ' Patient demo: ' + data.featuredProject.demoLinks[1].url + ' Doctor demo: ' + data.featuredProject.demoLinks[2].url + ' Yatri: ' + data.projects[1].link + ' App-Swipe: ' + data.projects[2].link + ' Leela: ' + data.projects[3].link;
   }
 
   if (lowerQuestion.includes('strongest') || lowerQuestion.includes('materna') || lowerQuestion.includes('case study') || lowerQuestion.includes('hardware') || lowerQuestion.includes('vitals')) {
@@ -1121,6 +1152,14 @@ function getPortfolioAnswer(question) {
     return namedProject.title + ': ' + namedProject.text + formatProjectLink(namedProject);
   }
 
+  if (lowerQuestion.includes('founder') || lowerQuestion.includes('founded')) {
+    const leela = data.projects.find(function(project) {
+      return project.title.toLowerCase() === 'leela';
+    });
+
+    return data.owner.firstName + ' is the founder of Leela. ' + leela.text + formatProjectLink(leela);
+  }
+
   if (lowerQuestion.includes('volunteer') || lowerQuestion.includes('volunteering') || lowerQuestion.includes('nepal') || lowerQuestion.includes('children')) {
     const volunteering = data.hobbies.find(function(hobby) {
       return hobby.id === 'volunteering';
@@ -1129,7 +1168,7 @@ function getPortfolioAnswer(question) {
   }
 
   if (lowerQuestion.includes('project')) {
-    return data.owner.firstName + "'s projects include " + listTitles(data.projects) + '. Materna shows software plus hardware/vitals thinking, Yatri focuses on tourist safety, Leela turns spiritual learning into a daily habit, and App-Swipe shows playful product building.';
+    return data.owner.firstName + "'s projects include " + listTitles(data.projects) + '. Materna shows software plus hardware/vitals thinking, Yatri focuses on tourist safety, Leela shows founder ownership and turns spiritual learning into a daily habit, and App-Swipe shows playful product building.';
   }
 
   if (lowerQuestion.includes('achievement') || lowerQuestion.includes('star') || lowerQuestion.includes('resident') || lowerQuestion.includes('ambassador')) {

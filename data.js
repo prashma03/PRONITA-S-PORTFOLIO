@@ -3,11 +3,11 @@ const portfolioData = {
     firstName: "Pronita",
     fullName: "Pronita Ghimire",
     portfolioTitle: "Pronita's Portfolio",
-    roleLine: "Student · Developer · Dreamer",
+    roleLine: "Student · Developer · Founder of Leela",
     introLabel: "✦ Welcome to my world ✦",
     photo: "1590.jpg",
     photoCaption: "Pronita Ghimire",
-    bio: "Hi, I am Pronita Ghimire, a Computer Science and Mathematics student at UAM and an aspiring software engineer. I enjoy building thoughtful projects, learning AI, and using technology to turn ideas into useful experiences. My work reflects both analytical problem-solving and creative curiosity, shaped by my interests in coding, dancing, research, and creative writing. I am still learning every day, but I care deeply about building with purpose, staying grounded, and growing into someone whose work is both intelligent and meaningful."
+    bio: "Hi, I am Pronita Ghimire, a Computer Science and Mathematics student at UAM, an aspiring software engineer, and the founder of Leela. I enjoy building thoughtful projects, learning AI, and using technology to turn ideas into useful experiences. My work reflects both analytical problem-solving and creative curiosity, shaped by my interests in coding, dancing, research, and creative writing. I am still learning every day, but I care deeply about building with purpose, staying grounded, and growing into someone whose work is both intelligent and meaningful."
   },
 
   contact: {
@@ -26,15 +26,19 @@ const portfolioData = {
     problem: "Maternal care can feel fragmented, stressful, and hard to navigate. Materna explores how software plus vitals-aware hardware concepts could help women find guidance sooner, reduce panic, and make support easier to reach.",
     role: "Worked across product thinking, front-end experience, user-centered feature planning, and the interaction model between patient software and health-signal tracking.",
     engineering: "Designed clear patient and doctor flows with a foundation for live vitals, emergency coordination, report sharing, and an accessible support platform for women and families.",
-    link: "https://materna-six.vercel.app",
+    link: "https://materna-six.vercel.app/demo",
     demoLinks: [
       {
-        label: "Open demo with vitals",
-        url: "https://prashma03.github.io/Hackathon/"
+        label: "Try live demo",
+        url: "https://materna-six.vercel.app/demo"
       },
       {
-        label: "Open demo without vitals",
-        url: "https://materna-six.vercel.app"
+        label: "Patient demo",
+        url: "https://materna-six.vercel.app/demo/patient"
+      },
+      {
+        label: "Doctor demo",
+        url: "https://materna-six.vercel.app/demo/doctor"
       }
     ],
     stack: ["React Native", "JavaScript", "hardware integration concept", "vitals tracking", "doctor dashboard", "accessibility thinking"],
@@ -55,7 +59,7 @@ const portfolioData = {
       text: "A maternal-care platform idea with life-saving potential: helping women find support, guidance, and clarity when every moment can matter.",
       caseStudy: true,
       actionText: "View case study",
-      link: "https://materna-six.vercel.app",
+      link: "https://materna-six.vercel.app/demo",
       linkText: "Open website"
     },
     {
@@ -72,8 +76,8 @@ const portfolioData = {
     },
     {
       title: "Leela",
-      text: "A daily spiritual-learning app for people who may not have time to read the whole Bhagwat Gita, but would still value a few meaningful lines every day.",
-      link: "https://leela-ruddy.vercel.app",
+      text: "Founded and built Leela, a daily spiritual-learning app for people who may not have time to read the whole Bhagwat Gita, but would still value a few meaningful lines every day.",
+      link: "https://leela-ruddy.vercel.app/",
       linkText: "Open website"
     }
   ],
