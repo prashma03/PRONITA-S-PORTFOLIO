@@ -1078,10 +1078,15 @@ function listSkillItems(skills) {
 function findProjectByQuestion(projects, lowerQuestion) {
   return projects.find(function(project) {
     const normalizedTitle = project.title.toLowerCase();
+    const titleWords = normalizedTitle.split(/\s+|—|-/).filter(function(word) {
+      return word.length > 2;
+    });
     const compactTitle = normalizedTitle.replace(/[^a-z0-9]/g, '');
     const compactQuestion = lowerQuestion.replace(/[^a-z0-9]/g, '');
 
-    return lowerQuestion.includes(normalizedTitle) || compactQuestion.includes(compactTitle);
+    return lowerQuestion.includes(normalizedTitle) || compactQuestion.includes(compactTitle) || titleWords.some(function(word) {
+      return lowerQuestion.includes(word);
+    });
   });
 }
 
@@ -1154,7 +1159,7 @@ function getPortfolioAnswer(question) {
 
   if (lowerQuestion.includes('founder') || lowerQuestion.includes('founded')) {
     const leela = data.projects.find(function(project) {
-      return project.title.toLowerCase() === 'leela';
+      return project.title.toLowerCase().includes('leela');
     });
 
     return data.owner.firstName + ' is the founder of Leela. ' + leela.text + formatProjectLink(leela);

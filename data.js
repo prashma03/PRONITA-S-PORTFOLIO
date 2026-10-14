@@ -75,7 +75,7 @@ const portfolioData = {
       linkText: "View GitHub"
     },
     {
-      title: "Leela",
+      title: "Leela — Founder Project",
       text: "Founded and built Leela, a daily spiritual-learning app for people who may not have time to read the whole Bhagwat Gita, but would still value a few meaningful lines every day.",
       link: "https://leela-ruddy.vercel.app/",
       linkText: "Open website"
